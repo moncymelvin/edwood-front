@@ -9,6 +9,7 @@ const SubList = () => {
   useEffect(() => {
     setLoading(true);
     getSubs().then((res) => {
+      console.log("sub list====",res.data)
       setSubs(res.data);
       setLoading(false);
     });
@@ -27,7 +28,7 @@ const SubList = () => {
   return (
     <div className="container">
       <div className="row">
-        {loading ? <h4 className="text-center">Loading...</h4> : showSubs()}
+        {/* {loading ? <h4 className="text-center">Loading...</h4> : showSubs()} */}
       </div>
     </div>
   );

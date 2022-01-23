@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getCategory } from "../../functions/category";
-import ProductCard from "../../components/cards/ProductCard";
+import { getCategory } from "../functions/category";
+// import ProductCard from "../../components/cards/ProductCard";
 
 const CategoryHome = ({ match }) => {
   const [category, setCategory] = useState({});
@@ -36,11 +36,11 @@ const CategoryHome = ({ match }) => {
       </div>
 
       <div className="row">
-        {products.map((p) => (
+        {/* {products.map((p) => (
           <div className="col" key={p._id}>
             <ProductCard product={p} />
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );

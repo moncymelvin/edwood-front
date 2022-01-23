@@ -23,7 +23,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import RegisterComplete from "./pages/auth/RegisterComplete";
 import Cart from "./pages/Cart";
-import CategoryHome from "./pages/category/CategoryHome";
+import CategoryHome from "./core/CategoryHome";
 import Checkout from "./pages/Checkout";
 import Home from "./pages/Home";
 import myhome from "./core/Home"
