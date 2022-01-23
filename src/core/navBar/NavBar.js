@@ -29,12 +29,24 @@ import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import UseStyles from "./UseStyles";
 import styles from "./NavBar.module.scss";
+import { getCategories } from "../../functions/category";
 
 const NavBar = () => {
   const [state, setState] = useState({
     mobileView: false,
     drawerOpen: false,
   });
+
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    getCategories().then((c) => {
+      setCategories(c.data);
+      setLoading(false);
+    });
+  }, []);
 
   const [megaMenu, setMegaMenu] = useState(false);
   const { mobileView, drawerOpen } = state;
@@ -100,75 +112,19 @@ const NavBar = () => {
             <Toolbar className={classes.toolbar}>
               <div style={{ display: "flex", marginLeft: "70%" }}>
                 {false ? (
-                  <>
-                    <Button
-                      ref={anchorRef}
-                      aria-controls={opens ? "menu-list-grow" : undefined}
-                      aria-haspopup="true"
-                      className={classes.shiftright}
-                      onClick={handleToggle}
-                    >
-                      test
-                    </Button>
-                    <Popper
-                      open={opens}
-                      anchorEl={anchorRef.current}
-                      role={undefined}
-                      transition
-                      disablePortal
-                    >
-                      {({ TransitionProps, placement }) => (
-                        <Grow
-                          {...TransitionProps}
-                          style={{
-                            transformOrigin:
-                              placement === "bottom"
-                                ? "center top"
-                                : "center bottom",
-                          }}
-                        >
-                          <Paper>
-                            <ClickAwayListener onClickAway={handleCloses}>
-                              <MenuList
-                                autoFocusItem={opens}
-                                id="menu-list-grow"
-                                onKeyDown={handleListKeyDown}
-                                className={classes.shiftright}
-                              >
-                                <MenuItem onClick={handleClose}>
-                                  <Link href="/accountdetails">Profile</Link>
-                                </MenuItem>
-                                <MenuItem onClick={handleClose}>
-                                  <Link href="/orders">Orders</Link>
-                                </MenuItem>
-                                <MenuItem
-                                // onClick={() => {
-                                //   deleteCookie("inv_ud");
-                                //   setUserDetails(null);
-                                //   router.push("/");
-                                // }}
-                                >
-                                  Logout
-                                </MenuItem>
-                              </MenuList>
-                            </ClickAwayListener>
-                          </Paper>
-                        </Grow>
-                      )}
-                    </Popper>
-                  </>
+                  <></>
                 ) : (
                   <>
                     <>
                       <div
-                      ref={anchorRef}
-                      aria-controls={opens ? "menu-list-grow" : undefined}
-                      aria-haspopup="true"
-                      className={classes.shiftright}
-                      onClick={handleToggle}
-                    >
-                      Furnitures
-                    </div>
+                        ref={anchorRef}
+                        aria-controls={opens ? "menu-list-grow" : undefined}
+                        aria-haspopup="true"
+                        className={classes.shiftright}
+                        onClick={handleToggle}
+                      >
+                        Furnitures
+                      </div>
                       <Popper
                         open={opens}
                         anchorEl={anchorRef.current}
@@ -192,23 +148,17 @@ const NavBar = () => {
                                   autoFocusItem={opens}
                                   id="menu-list-grow"
                                   onKeyDown={handleListKeyDown}
-                                  className={classes.shiftright}
+                                  // className={classes.shiftright}
                                 >
-                                  <MenuItem onClick={handleClose}>
-                                    <Link href="/accountdetails">Profile</Link>
-                                  </MenuItem>
-                                  <MenuItem onClick={handleClose}>
-                                    <Link href="/orders">Orders</Link>
-                                  </MenuItem>
-                                  <MenuItem
-                                  // onClick={() => {
-                                  //   deleteCookie("inv_ud");
-                                  //   setUserDetails(null);
-                                  //   router.push("/");
-                                  // }}
-                                  >
-                                    Logout
-                                  </MenuItem>
+                                  {categories.map((c) => (
+                                    <MenuItem onClick={handleClose}>
+                                    <Link to={`/category/${c.slug}`} style={{
+                                          color: "black",
+                                          fontSize: "14px",
+                                        }}>{c.name}</Link>
+                                      
+                                    </MenuItem>
+                                  ))}
                                 </MenuList>
                               </ClickAwayListener>
                             </Paper>
