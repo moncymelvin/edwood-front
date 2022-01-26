@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { getProduct, updateProduct } from "../../../functions/product";
 import { getCategories, getCategorySubs } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
-import { LoadingOutlined } from "@ant-design/icons";
 import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
 
 const initialState = {
@@ -123,7 +122,7 @@ const ProductUpdate = ({ match, history }) => {
 
         <div className="col-md-10">
           {loading ? (
-            <LoadingOutlined className="text-danger h1" />
+            <h4>Loading...</h4>
           ) : (
             <h4>Product update</h4>
           )}
@@ -135,9 +134,10 @@ const ProductUpdate = ({ match, history }) => {
               values={values}
               setValues={setValues}
               setLoading={setLoading}
+              checked={false}
             />
           </div>
-
+         
           <ProductUpdateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
@@ -150,7 +150,7 @@ const ProductUpdate = ({ match, history }) => {
             setArrayOfSubs={setArrayOfSubs}
             selectedCategory={selectedCategory}
           />
-          <hr />
+         
         </div>
       </div>
     </div>

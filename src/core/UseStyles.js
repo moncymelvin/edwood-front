@@ -2,6 +2,17 @@ import { red } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 
 const UseStyles = makeStyles((theme) => ({
+  wrap:{
+marginLeft: '150px',
+marginRight: '150px',
+[theme.breakpoints.down("sm")]: {
+  marginLeft: '0px',
+marginRight: '0px',
+},
+  },
+  background:{
+backgroundColor: '#F3F3F3'
+  },
   root: {
     width: "100%",
   },
@@ -114,9 +125,8 @@ marginTop:"10px"
     },
   },
   productwrapper:{
-    margin:"50px 100px 50px 100px",
     [theme.breakpoints.down("sm")]: {
-      margin:"20px 10px 20px 10px",
+      margin:"0px 10px 0px 10px",
       
     },
   },
@@ -127,6 +137,13 @@ marginTop:"10px"
       
     },
   },
+  imageHeight:{
+    height:'250px',
+    [theme.breakpoints.down("sm")]: {
+      height:"160px",
+      
+    },
+  }
 }));
 
 export default UseStyles;

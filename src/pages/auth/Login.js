@@ -1,5 +1,4 @@
-import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import Button from "@material-ui/core/Button";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -78,13 +77,12 @@ const Login = ({ history }) => {
     auth
       .signInWithPopup(googleAuthProvider)
       .then(async (result) => {
-        
         const { user } = result;
         const idTokenResult = await user.getIdTokenResult();
-        console.log("idTokenResult======>",idTokenResult.token)
+        console.log("idTokenResult======>", idTokenResult.token);
         createOrUpdateUser(idTokenResult.token)
           .then((res) => {
-            console.log("res======>",res)
+            console.log("res======>", res);
             dispatch({
               type: "LOGGED_IN_USER",
               payload: {
@@ -97,11 +95,11 @@ const Login = ({ history }) => {
             });
             roleBasedRedirect(res);
           })
-          .catch((err) => console.log("error====>",err));
+          .catch((err) => console.log("error====>", err));
         // history.push("/");
       })
       .catch((err) => {
-        console.log("err======>",err)
+        console.log("err======>", err);
         console.log(err);
         toast.error(err.message);
       });
@@ -132,14 +130,12 @@ const Login = ({ history }) => {
 
       <br />
       <Button
+        variant="contained"
         onClick={handleSubmit}
-        type="primary"
         className="mb-3"
-        block
-        shape="round"
-        icon={<MailOutlined />}
-        size="large"
         disabled={!email || password.length < 6}
+        color="primary"
+        size="large"
       >
         Login with Email/Password
       </Button>
@@ -147,27 +143,26 @@ const Login = ({ history }) => {
   );
 
   return (
-    <div className="container p-5">
+    <div className="container" style={{marginTop: '25px'}}>
       <div className="row">
-        <div className="col-md-6 offset-md-3">
+        <div className="col-md-6 col-md-offset-3">
           {loading ? (
             <h4 className="text-danger">Loading...</h4>
           ) : (
             <h4>Login</h4>
           )}
           {loginForm()}
-
+          <br/>
           <Button
+            variant="contained"
             onClick={googleLogin}
-            type="danger"
             className="mb-3"
-            block
-            shape="round"
-            icon={<GoogleOutlined />}
+            disabled={!email || password.length < 6}
+            color="secondary"
             size="large"
           >
             Login with Google
-          </Button>
+          </Button><br/><br/>
 
           <Link to="/forgot/password" className="float-right text-danger">
             Forgot Password

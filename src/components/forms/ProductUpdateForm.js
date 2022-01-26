@@ -1,7 +1,4 @@
 import React from "react";
-import { Select } from "antd";
-
-const { Option } = Select;
 
 const ProductUpdateForm = ({
   handleSubmit,
@@ -66,7 +63,7 @@ const ProductUpdateForm = ({
         />
       </div>
 
-      <div className="form-group">
+      {/* <div className="form-group">
         <label>Shipping</label>
         <select
           value={shipping === "Yes" ? "Yes" : "No"}
@@ -77,8 +74,8 @@ const ProductUpdateForm = ({
           <option value="No">No</option>
           <option value="Yes">Yes</option>
         </select>
-      </div>
-
+      </div> */}
+{/* 
       <div className="form-group">
         <label>Quantity</label>
         <input
@@ -88,9 +85,9 @@ const ProductUpdateForm = ({
           value={quantity}
           onChange={handleChange}
         />
-      </div>
+      </div> */}
 
-      <div className="form-group">
+      {/* <div className="form-group">
         <label>Color</label>
         <select
           value={color}
@@ -104,9 +101,9 @@ const ProductUpdateForm = ({
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
 
-      <div className="form-group">
+      {/* <div className="form-group">
         <label>Brand</label>
         <select
           value={brand}
@@ -120,7 +117,7 @@ const ProductUpdateForm = ({
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
 
       <div className="form-group">
         <label>Category</label>
@@ -139,7 +136,7 @@ const ProductUpdateForm = ({
         </select>
       </div>
 
-      <div>
+      {/* <div>
         <label>Sub Categories</label>
         <Select
           mode="multiple"
@@ -155,10 +152,10 @@ const ProductUpdateForm = ({
               </Option>
             ))}
         </Select>
-      </div>
+      </div> */}
 
       <br />
-      <button className="btn btn-outline-info">Save</button>
+      <button className="btn btn-outline-info bg-primary">Save</button>
     </form>
   );
 };

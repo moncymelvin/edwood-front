@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import { getProductsByCount } from "../../../functions/product";
-import AdminProductCard from "../../../components/cards/AdminProductCard";
 import { removeProduct } from "../../../functions/product";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import Cards from "../../../core/Card";
+import { Grid } from "@material-ui/core/";
+import UseStyles from "../../../core/UseStyles";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   // redux
   const { user } = useSelector((state) => ({ ...state }));
-
+  const classes = UseStyles();
   useEffect(() => {
     loadAllProducts();
   }, []);
@@ -58,15 +60,20 @@ const AllProducts = () => {
           ) : (
             <h4>All Products</h4>
           )}
-          <div className="row">
-            {products.map((product) => (
-              <div key={product._id} className="col-md-4 pb-3">
-                <AdminProductCard
-                  product={product}
-                  handleRemove={handleRemove}
-                />
-              </div>
-            ))}
+
+          <div className={classes.productwrapper}>
+            <Grid container alignItems="center">
+              {products?.map((product) => (
+                <Grid item lg={3} md={3} xs={6} className={classes.products}>
+                  <Cards product={product} handleRemove={handleRemove} admin={true}/>
+                </Grid>
+              ))}
+            </Grid>
+
+            {/* <div style={{display:'flex',justifyContent: 'center',marginTop: '20px'}}>
+        
+<Pagination count={Math.round(productsCount / perPage)} page={page} onChange={(event, value) => setPage(value)} variant="outlined" shape="rounded" />
+      </div> */}
           </div>
         </div>
       </div>

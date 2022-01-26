@@ -1,31 +1,41 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link, withRouter } from "react-router-dom";
 import Furnitures from "./Furnitures";
-import NavBar from "./navBar/NavBar"
+import CategoryDisplay from "./CategoryDisplay";
+import NavBar from "./navBar/NavBar";
 import Banner from "./Banner";
 import UseStyles from "./UseStyles";
+import { useLocation } from "react-router-dom";
 
-const Base = ()=>{
+
+const Base = () => {
+
+
   const classes = UseStyles();
-return(
-  <div>
-   
-   <NavBar/>
-   <Banner/>
+  return (
+    <div>
+      {/* <NavBar/> */}
+      <Banner />
 
-    <div id="portfolio">
-      <div>
-        <div class="section-title text-center center">
+      <div style={{ marginTop: "10%" }}>
+        <div class="text-center center">
           <h2>Our Furnitures</h2>
           <hr />
         </div>
 
         <Furnitures />
       </div>
-    </div>
 
+      <div style={{ marginTop: "10%" }}>
+        <div class="text-center center">
+          <h2>Category</h2>
+          <hr />
+        </div>
 
-    <div id="services">
+        <CategoryDisplay />
+      </div>
+
+      {/* <div id="services">
       <div class="container">
         <div class="col-md-10 col-md-offset-1 section-title text-center">
           <h2>Our Services</h2>
@@ -80,82 +90,11 @@ return(
           </div>
         </div>
       </div>
-    </div>
+    </div> */}
 
-    <div id="contact">
-      <div class="container">
-        <div class="section-title text-center">
-          <h2>Contact Us</h2>
-          <hr />
-        </div>
-        <div class="col-md-4"></div>
-        <div class="col-md-8">
-          <h3>Contact Info</h3>
-          <div class="contact-item">
-            
-            <span>Address</span>
-            <p>
-              4321 Thadiyoor,
-              <br />
-              Kerala, CA 12345
-            </p>
-          </div>
-          <div class="contact-item">
-            
-            <span>Email</span>
-            <p>edwood@gmail.com</p>
-          </div>
-          <div class="contact-item">
-            
-            <span>Phone</span>
-            <p> +91 8075904751</p>
-          </div>
-        </div>
-      </div>
+    
     </div>
-
-    <div id="footer">
-      <div class="container text-center">
-        <div class="social">
-          <ul>
-            <li>
-              <a href="#">
-                <i class="fa fa-facebook"></i>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-twitter"></i>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-google-plus"></i>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-pinterest"></i>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-youtube"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <p>
-            &copy; 2020 EdWOOD. Some rights reserved. Powered by
-            <a href="https://mcode3.co.in" rel="nofollow">
-              mcode3
-            </a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-)};
+  );
+};
 
 export default Base;

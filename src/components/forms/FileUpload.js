@@ -2,24 +2,26 @@ import React from "react";
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Avatar, Badge } from "antd";
+import Avatar from "@material-ui/core/Avatar";
+import Badge from "@material-ui/core/Badge";
+import { makeStyles } from "@material-ui/core/styles";
 
-const FileUpload = ({ values, setValues, setLoading }) => {
+const FileUpload = ({ values, setValues, setLoading,checked }) => {
   const { user } = useSelector((state) => ({ ...state }));
-
+console.log("checked===",checked)
   const fileUploadAndResize = (e) => {
     // console.log(e.target.files);
     // resize
     let files = e.target.files; // 3
-    let allUploadedFiles = values.images;
+    let allUploadedFiles = values;
 
     if (files) {
       setLoading(true);
       for (let i = 0; i < files.length; i++) {
         Resizer.imageFileResizer(
           files[i],
-          720,
-          720,
+          checked?1080:720,
+          checked?1080:720,
           "JPEG",
           100,
           0,
@@ -39,8 +41,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
                 console.log("IMAGE UPLOAD RES DATA", res);
                 setLoading(false);
                 allUploadedFiles.push(res.data);
-
-                setValues({ ...values, images: allUploadedFiles });
+                setValues({images: allUploadedFiles });
               })
               .catch((err) => {
                 setLoading(false);
@@ -82,38 +83,50 @@ const FileUpload = ({ values, setValues, setLoading }) => {
       });
   };
 
+  const useStyles = makeStyles((theme) => ({
+    large: {
+      width: theme.spacing(15),
+      height: theme.spacing(15),
+    },
+  }));
+
+  const classes = useStyles();
+
   return (
     <>
+      
+
       <div className="row">
         {values.images &&
           values.images.map((image) => (
             <Badge
-              count="X"
-              key={image.public_id}
-              onClick={() => handleImageRemove(image.public_id)}
-              style={{ cursor: "pointer" }}
-            >
-              <Avatar
-                src={image.url}
-                size={100}
-                shape="square"
-                className="ml-3"
-              />
-            </Badge>
+        badgeContent={"X"}
+        color="primary"
+        key={image.public_id}
+        onClick={() => handleImageRemove(image.public_id)}
+        style={{ cursor: "pointer" }}
+      >
+        <Avatar alt="Remy Sharp" src={image.url} className={classes.large} />
+      </Badge>
           ))}
       </div>
-      <div className="row">
+
+      {values?.images?.length ? null: <div className="row">
         <label className="btn btn-primary btn-raised mt-3">
-          Choose File
+         
           <input
             type="file"
-            multiple
             hidden
             accept="images/*"
             onChange={fileUploadAndResize}
           />
         </label>
-      </div>
+       
+      </div>}
+     
+
+
+      <br/>
     </>
   );
 };

@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
-import "antd/dist/antd.css";
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";

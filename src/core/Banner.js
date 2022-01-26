@@ -1,26 +1,61 @@
-import React from "react";
+import React, { useState, useEffect }  from "react";
 import UseStyles from "./UseStyles";
+import { getCategory } from "../functions/category";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
+import AutoFitImage from "react-image-autofit-frame";
+import { useMediaQuery } from "react-responsive";
+import "../slick-theme.css";
+import { getAdvs } from "../functions/adv"
 
 const Banner = () => {
+  const [category, setCategory] = useState({});
+  const [advs, setAdvs] = useState([]);
+  const [loading, setLoading] = useState(false);
+ 
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = () =>
+  getAdvs().then((c) => setAdvs(c.data));
+
+const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   const classes = UseStyles();
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows:true,
+    autoplay:true
+  };
   return (
-    <header id="header">
-      <div class="intro">
-        <div class="overlay">
-          <div class="container">
-            <div class="row">
-              <div class="intro-text">
-                <img src="logo.png" className={classes.logo}/>
-                <p>We design your home.</p>
-                <a href="#about" class="btn btn-custom btn-lg page-scroll">
-                  Our Furnitures
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+    <div>
+    <Slider {...settings} autoplaySpeed={3000}>
+     {advs?.map((item)=>{
+       return  isTabletOrMobile ? (
+              <AutoFitImage
+                // positionY="top"
+                frameWidth="100%"
+                frameHeight="200px"
+                imgSrc={item?.images[0]?.url}
+                imgSize="cover"
+              />
+            ) : (
+              <AutoFitImage
+                // positionY="top"
+                frameWidth="100%"
+                frameHeight="600px"
+                imgSrc={item?.images[0]?.url}
+                imgSize="cover"
+              /> 
+            )
+     })}
+    </Slider>
+  </div>
   );
 };
 

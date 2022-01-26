@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { getCategory } from "../functions/category";
 // import ProductCard from "../../components/cards/ProductCard";
+import { Grid } from "@material-ui/core/";
+import Pagination from "@material-ui/lab/Pagination";
+import Cards from "./Card";
+import UseStyles from "./UseStyles";
 
 const CategoryHome = ({ match }) => {
   const [category, setCategory] = useState({});
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const classes = UseStyles();
   const { slug } = match.params;
 
   useEffect(() => {
@@ -17,30 +21,22 @@ const CategoryHome = ({ match }) => {
       setProducts(res.data.products);
       setLoading(false);
     });
-  }, []);
+  }, [match.params]);
 
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col">
-          {loading ? (
-            <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
-              Loading...
-            </h4>
-          ) : (
-            <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
-              {products.length} Products in "{category.name}" category
-            </h4>
-          )}
+    <div>
+      <div className={classes.productwrapper} style={{ marginTop: "5%" }}>
+        <div style={{ textAlign: "center" }}>
+          <h2>{category.name}</h2>
+          <hr />
         </div>
-      </div>
-
-      <div className="row">
-        {/* {products.map((p) => (
-          <div className="col" key={p._id}>
-            <ProductCard product={p} />
-          </div>
-        ))} */}
+        <Grid container alignItems="center">
+          {products?.map((product) => (
+            <Grid item lg={3} md={3} xs={6} className={classes.products}>
+              <Cards product={product} />
+            </Grid>
+          ))}
+        </Grid>
       </div>
     </div>
   );

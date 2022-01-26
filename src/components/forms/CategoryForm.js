@@ -13,7 +13,7 @@ const CategoryForm = ({ handleSubmit, name, setName }) => (
         required
       />
       <br />
-      <button className="btn btn-outline-primary">Save</button>
+      <button className="btn btn-outline-primary bg-primary">Save</button>
     </div>
   </form>
 );

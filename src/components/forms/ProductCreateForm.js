@@ -1,7 +1,5 @@
 import React from "react";
-import { Select } from "antd";
 
-const { Option } = Select;
 
 const ProductCreateForm = ({
   handleSubmit,
@@ -64,7 +62,7 @@ const ProductCreateForm = ({
         />
       </div>
 
-      <div className="form-group">
+      {/* <div className="form-group">
         <label>Shipping</label>
         <select
           name="shipping"
@@ -75,9 +73,9 @@ const ProductCreateForm = ({
           <option value="No">No</option>
           <option value="Yes">Yes</option>
         </select>
-      </div>
+      </div> */}
 
-      <div className="form-group">
+      {/* <div className="form-group">
         <label>Quantity</label>
         <input
           type="number"
@@ -86,9 +84,9 @@ const ProductCreateForm = ({
           value={quantity}
           onChange={handleChange}
         />
-      </div>
+      </div> */}
 
-      <div className="form-group">
+      {/* <div className="form-group">
         <label>Color</label>
         <select name="color" className="form-control" onChange={handleChange}>
           <option>Please select</option>
@@ -98,9 +96,9 @@ const ProductCreateForm = ({
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
 
-      <div className="form-group">
+      {/* <div className="form-group">
         <label>Brand</label>
         <select name="brand" className="form-control" onChange={handleChange}>
           <option>Please select</option>
@@ -110,7 +108,7 @@ const ProductCreateForm = ({
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
 
       <div className="form-group">
         <label>Category</label>
@@ -129,7 +127,7 @@ const ProductCreateForm = ({
         </select>
       </div>
 
-      {showSub && (
+      {/* {showSub && (
         <div>
           <label>Sub Categories</label>
           <Select
@@ -147,10 +145,10 @@ const ProductCreateForm = ({
               ))}
           </Select>
         </div>
-      )}
+      )} */}
 
       <br />
-      <button className="btn btn-outline-info">Save</button>
+      <button className="btn btn-outline-info bg-primary">Save</button>
     </form>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, useHistory } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -21,6 +21,7 @@ import {
   Badge,
   Snackbar,
 } from "@material-ui/core";
+import CallIcon from "@material-ui/icons/Call";
 import MenuIcon from "@material-ui/icons/Menu";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonIcon from "@material-ui/icons/Person";
@@ -29,7 +30,9 @@ import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import UseStyles from "./UseStyles";
 import styles from "./NavBar.module.scss";
+import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../functions/category";
+import firebase from "firebase/compat/app";
 
 const NavBar = () => {
   const [state, setState] = useState({
@@ -39,6 +42,9 @@ const NavBar = () => {
 
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  let dispatch = useDispatch();
+  let { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
     setLoading(true);
@@ -57,6 +63,15 @@ const NavBar = () => {
   const [classification, setClassification] = useState([]);
   const [cart, setCart] = useState([]);
   const anchorRef = React.useRef(null);
+  let history = useHistory();
+  const logout = () => {
+    firebase.auth().signOut();
+    dispatch({
+      type: "LOGOUT",
+      payload: null,
+    });
+    history.push("/login");
+  };
 
   const Alert = (props) => {
     // return <MuiAlert elevation={1} variant="filled" {...props} />;
@@ -106,80 +121,101 @@ const NavBar = () => {
 
   const displayDesktop = () => {
     return (
-      <div>
-        <Paper className={classes.backgroundcolor} square={true} elevation={0}>
-          <div className={styles.wrapper}>
-            <Toolbar className={classes.toolbar}>
-              <div style={{ display: "flex", marginLeft: "70%" }}>
-                {false ? (
-                  <></>
-                ) : (
-                  <>
-                    <>
-                      <div
-                        ref={anchorRef}
-                        aria-controls={opens ? "menu-list-grow" : undefined}
-                        aria-haspopup="true"
-                        className={classes.shiftright}
-                        onClick={handleToggle}
-                      >
-                        Furnitures
-                      </div>
-                      <Popper
-                        open={opens}
-                        anchorEl={anchorRef.current}
-                        role={undefined}
-                        transition
-                        disablePortal
-                      >
-                        {({ TransitionProps, placement }) => (
-                          <Grow
-                            {...TransitionProps}
-                            style={{
-                              transformOrigin:
-                                placement === "bottom"
-                                  ? "center top"
-                                  : "center bottom",
-                            }}
-                          >
-                            <Paper>
-                              <ClickAwayListener onClickAway={handleCloses}>
-                                <MenuList
-                                  autoFocusItem={opens}
-                                  id="menu-list-grow"
-                                  onKeyDown={handleListKeyDown}
-                                  // className={classes.shiftright}
-                                >
-                                  {categories.map((c) => (
-                                    <MenuItem onClick={handleClose}>
-                                    <Link to={`/category/${c.slug}`} style={{
-                                          color: "black",
-                                          fontSize: "14px",
-                                        }}>{c.name}</Link>
-                                      
-                                    </MenuItem>
-                                  ))}
-                                </MenuList>
-                              </ClickAwayListener>
-                            </Paper>
-                          </Grow>
-                        )}
-                      </Popper>
-                    </>
-
-                    <Link href="/login">
-                      <div className={classes.shiftright}>Contact Us</div>
-                    </Link>
-
-                    <Link href="/login">
-                      <div className={classes.shiftright}>Login</div>
-                    </Link>
-                  </>
-                )}
-              </div>
-            </Toolbar>
+      <div
+        style={{
+          display: "flex",
+          // marginLeft: "65%",
+          alignItems: "center",
+          justifyContent: 'space-between',
+          padding:'5px'
+        }}
+      >
+        <img src="/logo.png" style={{ height: "60px",marginLeft:'30px' }} />
+        {user ? (
+          <div style={{display: 'flex',alignItems:'center',marginRight: '30px'}}>
+            <div onClick={logout} className={classes.shiftright}>
+              Logout
+            </div>
+            <div className={classes.shiftright}>
+              Hello, {user?.email && user?.email?.split("@")[0]}
+            </div>
           </div>
-        </Paper>
+        ) : (
+          <div style={{display: 'flex',alignItems:'center',marginRight: '30px'}}>
+            <Link to="/">
+              <div className={classes.shiftright} onClick={()=>window.scrollTo(0, 0)}>Home</div>
+            </Link>
+            <div
+              ref={anchorRef}
+              aria-controls={opens ? "menu-list-grow" : undefined}
+              aria-haspopup="true"
+              className={classes.shiftright}
+              onClick={handleToggle}
+              style={{
+                cursor: "pointer",
+                alignItems: "center",
+                display: "flex",
+              }}
+            >
+              Furnitures
+              <ArrowDropDownIcon />
+            </div>
+            <Popper
+              open={opens}
+              anchorEl={anchorRef.current}
+              role={undefined}
+              transition
+              disablePortal
+              placement="bottom"
+              style={{ marginLeft: "20px" }}
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow {...TransitionProps}>
+                  <Paper>
+                    <ClickAwayListener onClickAway={handleCloses}>
+                      <MenuList
+                        autoFocusItem={opens}
+                        id="menu-list-grow"
+                        onKeyDown={handleListKeyDown}
+                        // className={classes.shiftright}
+                      >
+                        {categories.map((c) => (
+                          <Link to={`/category/${c.slug}`}>
+                            <MenuItem
+                              style={{
+                                color: "black",
+                                fontSize: "14px",
+                              }}
+                            >
+                              {c.name}
+                            </MenuItem>
+                          </Link>
+                        ))}
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+            <a href="#contact">
+              <div className={classes.shiftright}>Contact Us</div>
+            </a>
+            <a
+              href="tel:+918590774213"
+              style={{
+                backgroundColor: "green",
+                color: "white",
+                padding: "5px",
+                borderRadius: "5px",
+                marginLeft: "30px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <CallIcon /> Call Now
+            </a>
+          </div>
+        )}
       </div>
     );
   };
@@ -195,7 +231,8 @@ const NavBar = () => {
     return (
       <Paper className={classes.backgroundcolor} square={true} elevation={0}>
         <Toolbar>
-          <IconButton
+  
+        <IconButton
             {...{
               edge: "start",
               color: "inherit",
@@ -206,7 +243,9 @@ const NavBar = () => {
           >
             <MenuIcon />
           </IconButton>
-
+          <img src="/logo.png" style={{ height: "40px",textAlign: 'center',marginLeft:'auto' }} />
+       
+         
           <Drawer
             {...{
               anchor: "left",
@@ -231,29 +270,96 @@ const NavBar = () => {
               aria-labelledby="nested-list-subheader"
               className={classes.root}
             >
-              {false ? (
-                <Link href="/login">
-                  <ListItem button>user</ListItem>
-                </Link>
-              ) : (
-                <Link href="/login">
-                  <Button
-                    aria-controls="simple-menu"
-                    aria-hasPopup="true"
-                    className={classes.shiftright}
-                  >
-                    <PersonIcon fontSize="small" /> Login
-                  </Button>
-                </Link>
+            
+            {user ? (
+          <div>
+            <div onClick={logout} className={classes.shiftright}>
+              Logout
+            </div>
+            <br/>
+            <div className={classes.shiftright}>
+              Hello, {user?.email && user?.email?.split("@")[0]}
+            </div>
+          </div>
+        ) : (
+          <div>
+            <Link to="/">
+              <div className={classes.shiftright} onClick={()=>window.scrollTo(0, 0)}>Home</div>
+            </Link>
+            <br/>
+            <div
+              ref={anchorRef}
+              aria-controls={opens ? "menu-list-grow" : undefined}
+              aria-haspopup="true"
+              className={classes.shiftright}
+              onClick={handleToggle}
+              style={{
+                cursor: "pointer",
+                alignItems: "center",
+                display: "flex",
+              }}
+            >
+              Furnitures
+              <ArrowDropDownIcon />
+            </div>
+            <Popper
+              open={opens}
+              anchorEl={anchorRef.current}
+              role={undefined}
+              transition
+              disablePortal
+              placement="bottom"
+              style={{ marginLeft: "20px" }}
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow {...TransitionProps}>
+                  <Paper>
+                    <ClickAwayListener onClickAway={handleCloses}>
+                      <MenuList
+                        autoFocusItem={opens}
+                        id="menu-list-grow"
+                        onKeyDown={handleListKeyDown}
+                        // className={classes.shiftright}
+                      >
+                        {categories.map((c) => (
+                          <Link to={`/category/${c.slug}`}>
+                            <MenuItem
+                              style={{
+                                color: "black",
+                                fontSize: "14px",
+                              }}
+                            >
+                              {c.name}
+                            </MenuItem>
+                          </Link>
+                        ))}
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
               )}
-              <br />
-              <br />
-              <br />
-              <hr />
-              <Typography variant="p" className={classes.shiftright}>
-                <b>Top categories</b>
-              </Typography>
-              <br /> <br />
+            </Popper>
+            <br/>
+            <a href="#contact">
+              <div className={classes.shiftright}>Contact Us</div>
+            </a>
+            <br/>
+            <a
+              href="tel:+918590774213"
+              style={{
+                backgroundColor: "green",
+                color: "white",
+                padding: "5px",
+                borderRadius: "5px",
+                marginLeft: "30px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <CallIcon /> Call Now
+            </a>
+          </div>
+        )}
             </List>
           </Drawer>
         </Toolbar>
@@ -261,28 +367,7 @@ const NavBar = () => {
     );
   };
 
-  const goToProductList = (name, cs_id, cat_id, sct_id) => {
-    // let queries = {};
-    // cs_id && (queries["cs_id"] = cs_id);
-    // cat_id && (queries["cat_id"] = cat_id);
-    // sct_id && (queries["sct_id"] = sct_id);
-    // router.push({
-    //   pathname: `/${slugName(name)}`,
-    //   query: queries,
-    // });
-  };
-
-  return (
-    <div>
-      <div className={classes.root}>
-        <header>
-          <AppBar elevation={0} className={classes.header}>
-            {mobileView ? displayMobile() : displayDesktop()}
-          </AppBar>
-        </header>
-      </div>
-    </div>
-  );
+  return <div style={{position:'sticky',top:'0',zIndex: '1',backgroundColor: 'white'}}>{mobileView ? displayMobile() : displayDesktop()}</div>;
 };
 
 export default NavBar;
