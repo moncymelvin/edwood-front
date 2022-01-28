@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Button } from "@material-ui/core/";
+import { Grid } from "@material-ui/core/";
 import Pagination from "@material-ui/lab/Pagination";
-import { Link } from "react-router-dom";
 import Cards from "./Card";
 import UseStyles from "./UseStyles";
 import { getProducts, getProductsCount } from "../functions/product";
-import ProductDetailsModal from "./ProductDetailsModal"
+import { useLocation } from "react-router-dom";
 
 export default function Furnitures() {
   const [products, setProducts] = useState([]);
@@ -13,7 +12,14 @@ export default function Furnitures() {
   const [productsCount, setProductsCount] = useState(0);
   const [page, setPage] = useState(1);
 
-  const perPage = 12;
+  const routePath = useLocation();
+ 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [routePath]);
+
+
+  const perPage = 16;
   useEffect(() => {
     loadAllProducts();
   }, [page]);
@@ -34,28 +40,32 @@ export default function Furnitures() {
   const classes = UseStyles();
 
   return (
-    <div className={classes.productwrapper}>
+    <div className={classes.productwrapper} style={{marginTop: '5%'}}>
+      <div style={{ textAlign: "center" }}>
+        <h2>All Furnitures </h2>
+        <hr />
+      </div>
+
       <Grid container alignItems="center">
         {products?.map((product) => {
-          return  <Grid item lg={3} md={3} xs={6} className={classes.products}>
+          return product?.category?.name !== "adv" ? (
+            <Grid item lg={3} md={3} xs={6} className={classes.products}>
               <Cards product={product} />
             </Grid>
+          ) : null;
         })}
       </Grid>
-      <ProductDetailsModal/>
+
       <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
+        style={{ display: "flex", justifyContent: "center", marginTop: "20px",paddingBottom: '10%' }}
       >
-        <Link to={"/furnitures"}>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            style={{ fontSize: "12px" }}
-          >
-            View All Furnitures
-          </Button>
-        </Link>
+        <Pagination
+          count={Math.round(productsCount / perPage)}
+          page={page}
+          onChange={(event, value) => setPage(value)}
+          variant="outlined"
+          shape="rounded"
+        />
       </div>
     </div>
   );

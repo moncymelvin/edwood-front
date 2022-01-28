@@ -29,22 +29,25 @@ const AdminNav = () => (
       </li>
 
       <li className="nav-item">
-        <Link to="/admin/sub" className="nav-link">
-          Sub Category
+        <Link to="/admin/adv" className="nav-link">
+       Create Advertisement
         </Link>
       </li>
 
       <li className="nav-item">
-        <Link to="/admin/coupon" className="nav-link">
-          Coupon
+        <Link to="/admin/req" className="nav-link">
+       Requirements 
         </Link>
       </li>
+     
 
-      <li className="nav-item">
+    
+
+      {/* <li className="nav-item">
         <Link to="/user/password" className="nav-link">
           Password
         </Link>
-      </li>
+      </li> */}
     </ul>
   </nav>
 );

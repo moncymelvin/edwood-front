@@ -8,12 +8,13 @@ import {
   removeCategory,
 } from "../../../functions/category";
 import { Link } from "react-router-dom";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import CategoryForm from "../../../components/forms/CategoryForm";
-import LocalSearch from "../../../components/forms/LocalSearch";
+import FileUpload from "../../../components/forms/CategoryFileUpload";
 
 const CategoryCreate = () => {
   const { user } = useSelector((state) => ({ ...state }));
+
+  const [images, setImages] = useState([]);
 
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,12 +33,12 @@ const CategoryCreate = () => {
     e.preventDefault();
     // console.log(name);
     setLoading(true);
-    createCategory({ name }, user.token)
+    createCategory({ name,images: images }, user.token)
       .then((res) => {
         // console.log(res)
         setLoading(false);
         setName("");
-        toast.success(`"${res.data.name}" is created`);
+        toast.success(`"Category" is created`);
         loadCategories();
       })
       .catch((err) => {
@@ -76,12 +77,21 @@ const CategoryCreate = () => {
         <div className="col-md-2">
           <AdminNav />
         </div>
-        <div className="col">
+        <div className="col-md-6">
           {loading ? (
             <h4 className="text-danger">Loading..</h4>
           ) : (
             <h4>Create category</h4>
           )}
+
+          <div className="p-3">
+            <FileUpload
+              values={images}
+              setValues={setImages}
+              setLoading={setLoading}
+              checked={false}
+            />
+          </div>
 
           <CategoryForm
             handleSubmit={handleSubmit}
@@ -90,21 +100,21 @@ const CategoryCreate = () => {
           />
 
           {/* step 2 and step 3 */}
-          <LocalSearch keyword={keyword} setKeyword={setKeyword} />
+          {/* <LocalSearch keyword={keyword} setKeyword={setKeyword} /> */}
 
           {/* step 5 */}
           {categories.filter(searched(keyword)).map((c) => (
-            <div className="alert alert-secondary" key={c._id}>
+            <div className="bg-info" key={c._id}>
               {c.name}
               <span
                 onClick={() => handleRemove(c.slug)}
                 className="btn btn-sm float-right"
               >
-                <DeleteOutlined className="text-danger" />
+                 <h5 className="text-danger">Delete</h5>
               </span>
               <Link to={`/admin/category/${c.slug}`}>
                 <span className="btn btn-sm float-right">
-                  <EditOutlined className="text-warning" />
+                 <h5 className="text-info">Edit</h5>
                 </span>
               </Link>
             </div>

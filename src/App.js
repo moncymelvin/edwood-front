@@ -3,43 +3,43 @@ import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import SideDrawer from "./components/drawer/SideDrawer";
-import Header from "./components/nav/Header";
 import AdminRoute from "./components/routes/AdminRoute";
-import UserRoute from "./components/routes/UserRoute";
 import { auth } from "./firebase";
 import { currentUser } from "./functions/auth";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import CategoryCreate from "./pages/admin/category/CategoryCreate";
 import CategoryUpdate from "./pages/admin/category/CategoryUpdate";
-import CreateCouponPage from "./pages/admin/coupon/CreateCouponPage";
+import Requirement from "./pages/admin/category/Requirement";
+
 import AllProducts from "./pages/admin/product/AllProducts";
 import ProductCreate from "./pages/admin/product/ProductCreate";
+import AdvCreate from "./pages/admin/product/AdvCreate";
 import ProductUpdate from "./pages/admin/product/ProductUpdate";
-import SubCreate from "./pages/admin/sub/SubCreate";
-import SubUpdate from "./pages/admin/sub/SubUpdate";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import RegisterComplete from "./pages/auth/RegisterComplete";
-import Cart from "./pages/Cart";
 import CategoryHome from "./core/CategoryHome";
-import Checkout from "./pages/Checkout";
-import Home from "./pages/Home";
-import myhome from "./core/Home"
-import Furnitures from "./core/Furnitures"
-import Payment from "./pages/Payment";
-import Product from "./pages/Product";
-import Shop from "./pages/Shop";
-import SubHome from "./pages/sub/SubHome";
-import History from "./pages/user/History";
-import Password from "./pages/user/Password";
-import Wishlist from "./pages/user/Wishlist";
+import Base from "./core/Base"
+import AllFurnitures from "./core/AllFurnitures";
+import NavBar from "./core/navBar/NavBar";
+import UseStyles from "./core/UseStyles";
 
+import ContactUs from "./core/ContactUs";
+import Footer from "./core/Footer";
+import { useLocation } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
+  const classes = UseStyles();
   const dispatch = useDispatch();
+
+  const routePath = useLocation();
+ 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [routePath]);
+
 
   // to check firebase auth state
   useEffect(() => {
@@ -50,7 +50,6 @@ const App = () => {
 
         currentUser(idTokenResult.token)
           .then((res) => {
-            console.log("res===============<",res)
             dispatch({
               type: "LOGGED_IN_USER",
               payload: {
@@ -70,21 +69,21 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <>
-      {/* <Header />
-      <SideDrawer />
-      <ToastContainer /> */}
+    <div className={classes.background}>
+    <div className={classes.wrap}>
+      <NavBar />
+      {/* <SideDrawer /> */}
+      <ToastContainer />
       <Switch>
-        <Route exact path="/" component={Home} />
+      <Route path="/" exact component={Base} />
+        {/* <Route exact path="/" component={Home} /> */}
         <Route exact path="/login" component={Login} />
-        <Route path="/furnitures" exact component={Furnitures} />
-        <Route path="/home" exact component={myhome} />
+        <Route path="/furnitures" exact component={AllFurnitures} />
+       
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/forgot/password" component={ForgotPassword} />
-        <UserRoute exact path="/user/history" component={History} />
-        <UserRoute exact path="/user/password" component={Password} />
-        <UserRoute exact path="/user/wishlist" component={Wishlist} />
+       
         <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
         <AdminRoute exact path="/admin/category" component={CategoryCreate} />
         <AdminRoute
@@ -92,25 +91,24 @@ const App = () => {
           path="/admin/category/:slug"
           component={CategoryUpdate}
         />
-        <AdminRoute exact path="/admin/sub" component={SubCreate} />
-        <AdminRoute exact path="/admin/sub/:slug" component={SubUpdate} />
         <AdminRoute exact path="/admin/product" component={ProductCreate} />
+        <AdminRoute exact path="/admin/adv" component={AdvCreate} />
+        <AdminRoute exact path="/admin/req" component={Requirement} />
         <AdminRoute exact path="/admin/products" component={AllProducts} />
         <AdminRoute
           exact
           path="/admin/product/:slug"
           component={ProductUpdate}
         />
-        <Route exact path="/product/:slug" component={Product} />
         <Route exact path="/category/:slug" component={CategoryHome} />
-        <Route exact path="/sub/:slug" component={SubHome} />
-        <Route exact path="/shop" component={Shop} />
-        <Route exact path="/cart" component={Cart} />
-        <UserRoute exact path="/checkout" component={Checkout} />
-        <AdminRoute exact path="/admin/coupon" component={CreateCouponPage} />
-        <UserRoute exact path="/payment" component={Payment} />
+  
       </Switch>
-    </>
+
+      <ContactUs/>
+
+    <Footer/>
+    </div>
+    </div>
   );
 };
 

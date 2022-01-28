@@ -13,7 +13,7 @@ const FileUpload = ({ values, setValues, setLoading,checked }) => {
     // console.log(e.target.files);
     // resize
     let files = e.target.files; // 3
-    let allUploadedFiles = values?.images;
+    let allUploadedFiles = values;
 
     if (files) {
       setLoading(true);
@@ -40,8 +40,8 @@ const FileUpload = ({ values, setValues, setLoading,checked }) => {
               .then((res) => {
                 console.log("IMAGE UPLOAD RES DATA", res);
                 setLoading(false);
-                allUploadedFiles?.push(res.data);
-                setValues({...values, images: allUploadedFiles });
+                allUploadedFiles.push(res.data);
+                setValues({images: allUploadedFiles });
               })
               .catch((err) => {
                 setLoading(false);
@@ -97,8 +97,8 @@ console.log("values==",values?.images)
       
 
       <div className="row">
-        {values?.images &&
-          values?.images?.map((image) => (
+        {values.images &&
+          values.images.map((image) => (
             <Badge
         badgeContent={"X"}
         color="primary"

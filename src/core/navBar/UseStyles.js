@@ -50,7 +50,7 @@ const UseStyles = makeStyles((theme) => ({
     opacity: 0.6,
   },
   backgroundcolor: {
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
   },
   shiftright: {
     paddingLeft:"30px",
