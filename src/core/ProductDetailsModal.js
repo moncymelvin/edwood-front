@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
+import CancelIcon from "@material-ui/icons/Cancel";
 import AutoFitImage from "react-image-autofit-frame";
 
 function rand() {
@@ -39,6 +40,12 @@ const ProductDetailsModal = ({ open, product, handleClose }) => {
   const body = (
     <div className="row" style={{ backgroundColor: "white" }}>
       <div
+        style={{ position: "absolute", margin: "10px" }}
+        onClick={() => handleClose()}
+      >
+        <CancelIcon style={{ fontSize: "25px",color: 'black' }} />
+      </div>
+      <div
         onClick={() =>
           window.open(
             product?.images && product?.images.length && product?.images[0].url,
@@ -56,14 +63,20 @@ const ProductDetailsModal = ({ open, product, handleClose }) => {
           imgSize="cover"
         />
       </div>
-
       <br />
-      <div style={{ color: "black", marginLeft: "5px", width: "340px" }}>
-        {product?.title}
+      <div
+        style={{
+          color: "black",
+          margin: "5px",
+          width: "340px",
+          padding: "10px",
+        }}
+      >
+        <b>{product?.title}</b>
         <br />
         Rs. {product?.price}
         <br /> <br />
-        Description : <br />
+      <b> Description :</b>  <br />
         {product?.description} <br />
       </div>
     </div>

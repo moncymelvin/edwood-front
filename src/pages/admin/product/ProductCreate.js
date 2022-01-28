@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import FileUpload from "../../../components/forms/FileUpload";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import AdminNav from "../../../components/nav/AdminNav";
-import { getCategories, getCategorySubs } from "../../../functions/category";
+import { getCategories } from "../../../functions/category";
 import { createProduct } from "../../../functions/product";
 
 const initialState = {
@@ -42,8 +42,6 @@ const initialState = {
 
 const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
-  const [subOptions, setSubOptions] = useState([]);
-  const [showSub, setShowSub] = useState(false);
   const [loading, setLoading] = useState(false);
   
 
@@ -81,11 +79,6 @@ const ProductCreate = () => {
     e.preventDefault();
     console.log("CLICKED CATEGORY", e.target.value);
     setValues({ ...values, subs: [], category: e.target.value });
-    getCategorySubs(e.target.value).then((res) => {
-      console.log("SUB OPTIONS ON CATGORY CLICK", res);
-      setSubOptions(res.data);
-    });
-    setShowSub(true);
   };
 
   return (
@@ -117,11 +110,8 @@ const ProductCreate = () => {
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
-            setValues={setValues}
             values={values}
             handleCatagoryChange={handleCatagoryChange}
-            subOptions={subOptions}
-            showSub={showSub}
           />
         </div>
       </div>

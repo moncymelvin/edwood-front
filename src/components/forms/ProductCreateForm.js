@@ -4,11 +4,8 @@ import React from "react";
 const ProductCreateForm = ({
   handleSubmit,
   handleChange,
-  setValues,
   values,
   handleCatagoryChange,
-  subOptions,
-  showSub,
 }) => {
   // destructure
   const {
@@ -118,8 +115,8 @@ const ProductCreateForm = ({
           onChange={handleCatagoryChange}
         >
           <option>Please select</option>
-          {categories.length > 0 &&
-            categories.map((c) => (
+          {categories?.length > 0 &&
+            categories?.map((c) => (
               <option key={c._id} value={c._id}>
                 {c.name}
               </option>

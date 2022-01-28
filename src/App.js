@@ -9,6 +9,8 @@ import { currentUser } from "./functions/auth";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import CategoryCreate from "./pages/admin/category/CategoryCreate";
 import CategoryUpdate from "./pages/admin/category/CategoryUpdate";
+import Requirement from "./pages/admin/category/Requirement";
+
 import AllProducts from "./pages/admin/product/AllProducts";
 import ProductCreate from "./pages/admin/product/ProductCreate";
 import AdvCreate from "./pages/admin/product/AdvCreate";
@@ -91,6 +93,7 @@ const App = () => {
         />
         <AdminRoute exact path="/admin/product" component={ProductCreate} />
         <AdminRoute exact path="/admin/adv" component={AdvCreate} />
+        <AdminRoute exact path="/admin/req" component={Requirement} />
         <AdminRoute exact path="/admin/products" component={AllProducts} />
         <AdminRoute
           exact

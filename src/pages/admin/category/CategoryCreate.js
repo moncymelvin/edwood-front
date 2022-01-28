@@ -9,7 +9,7 @@ import {
 } from "../../../functions/category";
 import { Link } from "react-router-dom";
 import CategoryForm from "../../../components/forms/CategoryForm";
-import FileUpload from "../../../components/forms/FileUpload";
+import FileUpload from "../../../components/forms/CategoryFileUpload";
 
 const CategoryCreate = () => {
   const { user } = useSelector((state) => ({ ...state }));

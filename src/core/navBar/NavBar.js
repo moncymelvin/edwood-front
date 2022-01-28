@@ -212,7 +212,7 @@ const NavBar = () => {
                 alignItems: "center",
               }}
             >
-              <CallIcon /> Call Now
+              <CallIcon /> +91 8590774213
             </a>
           </div>
         )}
@@ -243,6 +243,23 @@ const NavBar = () => {
           >
             <MenuIcon />
           </IconButton>
+
+          <a
+              href="tel:+918590774213"
+              style={{
+                backgroundColor: "green",
+                color: "white",
+                padding: "5px",
+                borderRadius: "5px",
+                marginLeft: "10px",
+                display: "flex",
+                alignItems: "center",
+                alignContent: 'center'
+              }}
+            >
+              <CallIcon style={{marginRight:'5px'}}/>{" "}  +91 8590774213
+            </a>
+            
           <img src="/logo.png" style={{ height: "40px",textAlign: 'center',marginLeft:'auto' }} />
        
          
@@ -344,20 +361,6 @@ const NavBar = () => {
               <div className={classes.shiftright}>Contact Us</div>
             </a>
             <br/>
-            <a
-              href="tel:+918590774213"
-              style={{
-                backgroundColor: "green",
-                color: "white",
-                padding: "5px",
-                borderRadius: "5px",
-                marginLeft: "30px",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <CallIcon /> Call Now
-            </a>
           </div>
         )}
             </List>

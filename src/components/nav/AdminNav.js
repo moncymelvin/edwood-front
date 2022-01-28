@@ -33,6 +33,12 @@ const AdminNav = () => (
        Create Advertisement
         </Link>
       </li>
+
+      <li className="nav-item">
+        <Link to="/admin/req" className="nav-link">
+       Requirements 
+        </Link>
+      </li>
      
 
     

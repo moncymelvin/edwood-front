@@ -3,7 +3,7 @@ import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { getProduct, updateProduct } from "../../../functions/product";
-import { getCategories, getCategorySubs } from "../../../functions/category";
+import { getCategories } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
 import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
 
@@ -46,9 +46,6 @@ const ProductUpdate = ({ match, history }) => {
       // 1 load single proudct
       setValues({ ...values, ...p.data });
       // 2 load single product category subs
-      getCategorySubs(p.data.category._id).then((res) => {
-        setSubOptions(res.data); // on first load, show default subs
-      });
       // 3 prepare array of sub ids to show as default sub values in antd Select
       let arr = [];
       p.data.subs.map((s) => {
@@ -97,12 +94,6 @@ const ProductUpdate = ({ match, history }) => {
 
     setSelectedCategory(e.target.value);
 
-    getCategorySubs(e.target.value).then((res) => {
-      console.log("SUB OPTIONS ON CATGORY CLICK", res);
-      setSubOptions(res.data);
-    });
-
-    console.log("EXISTING CATEGORY values.category", values.category);
 
     // if user clicks back to the original category
     // show its sub categories in default
