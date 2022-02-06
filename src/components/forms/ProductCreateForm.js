@@ -132,19 +132,6 @@ const ProductCreateForm = ({
         </select>
       </div>
 
-      <div className="form-group">
-        <label>Description</label><br/>
-        <ReactQuill theme="snow" name="description" value={description} onChange={handleDescriptionChange} onKeyDown={handleEnter}/>
-        {/* <input
-          type="text"
-          name="description"
-          className="form-control"
-          value={description}
-          onChange={handleChange}
-        /> */}
-      </div>
-{console.log("subOptions=====",subOptions)}
-
       {showSub && (
         <div>
           <label>Sub Categories</label>
@@ -162,24 +149,14 @@ const ProductCreateForm = ({
               </option>
             ))}
         </select>
-
-
-          {/* <Select
-            mode="multiple"
-            style={{ width: "100%" }}
-            placeholder="Please select"
-            value={subs}
-            onChange={(value) => setValues({ ...values, subs: value })}
-          >
-            {subOptions.length &&
-              subOptions.map((s) => (
-                <Option key={s._id} value={s._id}>
-                  {s.name}
-                </Option>
-              ))}
-          </Select> */}
         </div>
       )}
+      <br />
+      <div className="form-group">
+        <label>Description</label><br/>
+        <ReactQuill theme="snow" name="description" value={description} onChange={handleDescriptionChange} onKeyDown={handleEnter}/>
+      </div>
+
 
       <br />
       <button className="btn btn-outline-info bg-primary">Save</button>

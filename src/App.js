@@ -28,7 +28,7 @@ const ForgotPassword = lazy(() => import("./pages/auth/ForgotPassword"));
 const Login = lazy(() => import("./pages/auth/Login"));
 const Register = lazy(() => import("./pages/auth/Register"));
 const RegisterComplete = lazy(() => import("./pages/auth/RegisterComplete"));
-const CategoryHome = lazy(() => import("./core/CategoryHome"));
+const CategoryHome = lazy(() => import("./pages/category/CategoryHome"));
 const Base = lazy(() => import("./core/Base"));
 const AllFurnitures = lazy(() => import("./core/AllFurnitures"));
 const NavBar = lazy(() => import("./core/navBar/NavBar"));

@@ -86,35 +86,32 @@ const ProductUpdateForm = ({
         </select>
       </div>
 
+        <div>
+          <label>Sub Categories</label>
+
+          <select
+          name="category"
+          className="form-control"
+          onChange={(e) => setValues({ ...values, subs: e.target.value })}
+        >
+          <option>Please select</option>
+          {subOptions?.length > 0 &&
+            subOptions?.map((c) => (
+              <option key={c._id} value={c._id}>
+                {c.name}
+              </option>
+            ))}
+        </select>
+        </div>
+      <br />
+
       <div className="form-group">
         <label>Description</label><br/>
         <ReactQuill theme="snow" name="description" value={description} onChange={handleDescriptionChange}/>
-        {/* <input
-          type="text"
-          name="description"
-          className="form-control"
-          value={description}
-          onChange={handleChange}
-        /> */}
+
       </div>
 
-      {/* <div>
-        <label>Sub Categories</label>
-        <Select
-          mode="multiple"
-          style={{ width: "100%" }}
-          placeholder="Please select"
-          value={arrayOfSubs}
-          onChange={(value) => setArrayOfSubs(value)}
-        >
-          {subOptions.length &&
-            subOptions.map((s) => (
-              <Option key={s._id} value={s._id}>
-                {s.name}
-              </Option>
-            ))}
-        </Select>
-      </div> */}
+      
 
       <br />
       <button className="btn btn-outline-info bg-primary">Save</button>

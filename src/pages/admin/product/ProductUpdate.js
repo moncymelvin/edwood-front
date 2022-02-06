@@ -3,7 +3,7 @@ import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { getProduct, updateProduct } from "../../../functions/product";
-import { getCategories } from "../../../functions/category";
+import { getCategories, getCategorySubs } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
 import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
 
@@ -94,6 +94,12 @@ const ProductUpdate = ({ match, history }) => {
 
     setSelectedCategory(e.target.value);
 
+    getCategorySubs(e.target.value).then((res) => {
+      console.log("SUB OPTIONS ON CATGORY CLICK", res);
+      setSubOptions(res.data);
+    });
+
+    console.log("EXISTING CATEGORY values.category", values.category);
 
     // if user clicks back to the original category
     // show its sub categories in default

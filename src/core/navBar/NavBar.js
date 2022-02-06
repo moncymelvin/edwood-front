@@ -126,13 +126,19 @@ const NavBar = () => {
           display: "flex",
           // marginLeft: "65%",
           alignItems: "center",
-          justifyContent: 'space-between',
-          padding:'5px'
+          justifyContent: "space-between",
+          padding: "5px",
         }}
       >
-        <img src="/logo.png" style={{ height: "60px",marginLeft:'30px' }} />
+        <img src="/logo.png" style={{ height: "60px", marginLeft: "30px" }} />
         {user ? (
-          <div style={{display: 'flex',alignItems:'center',marginRight: '30px'}}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginRight: "30px",
+            }}
+          >
             <div onClick={logout} className={classes.shiftright}>
               Logout
             </div>
@@ -141,9 +147,20 @@ const NavBar = () => {
             </div>
           </div>
         ) : (
-          <div style={{display: 'flex',alignItems:'center',marginRight: '30px'}}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginRight: "30px",
+            }}
+          >
             <Link to="/">
-              <div className={classes.shiftright} onClick={()=>window.scrollTo(0, 0)}>Home</div>
+              <div
+                className={classes.shiftright}
+                onClick={() => window.scrollTo(0, 0)}
+              >
+                Home
+              </div>
             </Link>
             <div
               ref={anchorRef}
@@ -197,9 +214,6 @@ const NavBar = () => {
                 </Grow>
               )}
             </Popper>
-            <a href="#contact">
-              <div className={classes.shiftright}>Contact Us</div>
-            </a>
             <a
               href="tel:+918590774213"
               style={{
@@ -231,8 +245,7 @@ const NavBar = () => {
     return (
       <Paper className={classes.backgroundcolor} square={true} elevation={0}>
         <Toolbar>
-  
-        <IconButton
+          <IconButton
             {...{
               edge: "start",
               color: "inherit",
@@ -241,28 +254,30 @@ const NavBar = () => {
               onClick: handleDrawerOpen,
             }}
           >
-            <MenuIcon />
+            <MenuIcon style={{ color: "white" }} />
           </IconButton>
 
           <a
-              href="tel:+918590774213"
-              style={{
-                backgroundColor: "green",
-                color: "white",
-                padding: "5px",
-                borderRadius: "5px",
-                marginLeft: "10px",
-                display: "flex",
-                alignItems: "center",
-                alignContent: 'center'
-              }}
-            >
-              <CallIcon style={{marginRight:'5px'}}/>{" "}  +91 8590774213
-            </a>
-            
-          <img src="/logo.png" style={{ height: "40px",textAlign: 'center',marginLeft:'auto' }} />
-       
-         
+            href="tel:+918590774213"
+            style={{
+              backgroundColor: "green",
+              color: "white",
+              padding: "5px",
+              borderRadius: "5px",
+              marginLeft: "10px",
+              display: "flex",
+              alignItems: "center",
+              alignContent: "center",
+            }}
+          >
+            <CallIcon style={{ marginRight: "5px" }} /> +91 8590774213
+          </a>
+
+          <img
+            src="/logo.png"
+            style={{ height: "40px", textAlign: "center", marginLeft: "auto" }}
+          />
+
           <Drawer
             {...{
               anchor: "left",
@@ -270,107 +285,132 @@ const NavBar = () => {
               onClose: handleDrawerClose,
             }}
           >
-            <IconButton
-              {...{
-                edge: "start",
-                color: "inherit",
-                "aria-label": "menu",
-                "aria-haspopup": "true",
-                onClick: handleDrawerClose,
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-
-            <List
-              component="nav"
-              aria-labelledby="nested-list-subheader"
-              className={classes.root}
-            >
-            
-            {user ? (
-          <div>
-            <div onClick={logout} className={classes.shiftright}>
-              Logout
-            </div>
-            <br/>
-            <div className={classes.shiftright}>
-              Hello, {user?.email && user?.email?.split("@")[0]}
-            </div>
-          </div>
-        ) : (
-          <div>
-            <Link to="/">
-              <div className={classes.shiftright} onClick={()=>window.scrollTo(0, 0)}>Home</div>
-            </Link>
-            <br/>
             <div
-              ref={anchorRef}
-              aria-controls={opens ? "menu-list-grow" : undefined}
-              aria-haspopup="true"
-              className={classes.shiftright}
-              onClick={handleToggle}
               style={{
-                cursor: "pointer",
-                alignItems: "center",
+                backgroundColor: "#232F3E",
+                height: "100%",
                 display: "flex",
+                flexDirection: "column",
               }}
             >
-              Furnitures
-              <ArrowDropDownIcon />
-            </div>
-            <Popper
-              open={opens}
-              anchorEl={anchorRef.current}
-              role={undefined}
-              transition
-              disablePortal
-              placement="bottom"
-              style={{ marginLeft: "20px" }}
-            >
-              {({ TransitionProps, placement }) => (
-                <Grow {...TransitionProps}>
-                  <Paper>
-                    <ClickAwayListener onClickAway={handleCloses}>
-                      <MenuList
-                        autoFocusItem={opens}
-                        id="menu-list-grow"
-                        onKeyDown={handleListKeyDown}
-                        // className={classes.shiftright}
+              <IconButton
+                {...{
+                  edge: "start",
+                  color: "inherit",
+                  "aria-label": "menu",
+                  "aria-haspopup": "true",
+                  onClick: handleDrawerClose,
+                }}
+              >
+                <MenuIcon
+                  style={{
+                    color: "white",
+                  }}
+                />
+              </IconButton>
+
+              <List
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+                className={classes.root}
+              >
+                {user ? (
+                  <div>
+                    <div onClick={logout} className={classes.shiftright}>
+                      Logout
+                    </div>
+                    <br />
+                    <div className={classes.shiftright}>
+                      Hello, {user?.email && user?.email?.split("@")[0]}
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <Link to="/">
+                      <div
+                        className={classes.shiftright}
+                        onClick={() => window.scrollTo(0, 0)}
                       >
-                        {categories.map((c) => (
-                          <Link to={`/category/${c.slug}`}>
-                            <MenuItem
-                              style={{
-                                color: "black",
-                                fontSize: "14px",
-                              }}
-                            >
-                              {c.name}
-                            </MenuItem>
-                          </Link>
-                        ))}
-                      </MenuList>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
-            <br/>
-            <a href="#contact">
-              <div className={classes.shiftright}>Contact Us</div>
-            </a>
-            <br/>
-          </div>
-        )}
-            </List>
+                        Home
+                      </div>
+                    </Link>
+                    <br />
+                    <div
+                      ref={anchorRef}
+                      aria-controls={opens ? "menu-list-grow" : undefined}
+                      aria-haspopup="true"
+                      className={classes.shiftright}
+                      onClick={handleToggle}
+                      style={{
+                        cursor: "pointer",
+                        alignItems: "center",
+                        display: "flex",
+                      }}
+                    >
+                      Furnitures
+                      <ArrowDropDownIcon />
+                    </div>
+                    <Popper
+                      open={opens}
+                      anchorEl={anchorRef.current}
+                      role={undefined}
+                      transition
+                      disablePortal
+                      placement="bottom"
+                      style={{ marginLeft: "20px" }}
+                    >
+                      {({ TransitionProps, placement }) => (
+                        <Grow {...TransitionProps}>
+                          <Paper>
+                            <ClickAwayListener onClickAway={handleCloses}>
+                              <MenuList
+                                autoFocusItem={opens}
+                                id="menu-list-grow"
+                                onKeyDown={handleListKeyDown}
+                                // className={classes.shiftright}
+                              >
+                                {categories.map((c) => (
+                                  <Link to={`/category/${c.slug}`}>
+                                    <MenuItem
+                                      style={{
+                                        color: "black",
+                                        fontSize: "14px",
+                                      }}
+                                    >
+                                      {c.name}
+                                    </MenuItem>
+                                  </Link>
+                                ))}
+                              </MenuList>
+                            </ClickAwayListener>
+                          </Paper>
+                        </Grow>
+                      )}
+                    </Popper>
+                    <br />
+                    <br />
+                  </div>
+                )}
+              </List>
+            </div>
           </Drawer>
         </Toolbar>
       </Paper>
     );
   };
 
-  return <div style={{position:'sticky',top:'0',zIndex: '1',backgroundColor: 'white'}}>{mobileView ? displayMobile() : displayDesktop()}</div>;
+  return (
+    <div
+      style={{
+        position: "sticky",
+        top: "0",
+        zIndex: "1",
+        backgroundColor: "#232F3E",
+      }}
+    >
+      {mobileView ? displayMobile() : displayDesktop()}
+    </div>
+  );
 };
 
 export default NavBar;

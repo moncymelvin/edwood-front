@@ -43,7 +43,7 @@ const ProductDetailsModal = ({ open, product, handleClose }) => {
         style={{ position: "absolute", margin: "10px" }}
         onClick={() => handleClose()}
       >
-        <CancelIcon style={{ fontSize: "25px",color: 'black' }} />
+        <CancelIcon style={{ fontSize: "25px",color: 'white',backgroundColor:'black',borderRadius:'20px' }} />
       </div>
       <div
         onClick={() =>

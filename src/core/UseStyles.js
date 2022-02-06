@@ -5,6 +5,7 @@ const UseStyles = makeStyles((theme) => ({
   wrap:{
 marginLeft: '150px',
 marginRight: '150px',
+backgroundColor: 'white',
 [theme.breakpoints.down("sm")]: {
   marginLeft: '0px',
 marginRight: '0px',
@@ -129,6 +130,7 @@ marginTop:"10px"
     },
   },
   productwrapper:{
+    // backgroundColor:"white",
     [theme.breakpoints.down("sm")]: {
       margin:"0px 10px 0px 10px",
       
