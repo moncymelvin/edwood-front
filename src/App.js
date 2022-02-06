@@ -28,12 +28,16 @@ const ForgotPassword = lazy(() => import("./pages/auth/ForgotPassword"));
 const Login = lazy(() => import("./pages/auth/Login"));
 const Register = lazy(() => import("./pages/auth/Register"));
 const RegisterComplete = lazy(() => import("./pages/auth/RegisterComplete"));
-const CategoryHome = lazy(() => import("./core/CategoryHome"));
+const CategoryHome = lazy(() => import("./pages/category/CategoryHome"));
 const Base = lazy(() => import("./core/Base"));
 const AllFurnitures = lazy(() => import("./core/AllFurnitures"));
 const NavBar = lazy(() => import("./core/navBar/NavBar"));
 const ContactUs = lazy(() => import("./core/ContactUs"));
 const Footer = lazy(() => import("./core/Footer"));
+
+const SubCreate = lazy(() => import("./pages/admin/sub/SubCreate"));
+const SubUpdate = lazy(() => import("./pages/admin/sub/SubUpdate"));
+const SubHome = lazy(() => import("./pages/sub/SubHome"));
 
 const App = () => {
   const classes = UseStyles();
@@ -94,7 +98,7 @@ const App = () => {
               component={RegisterComplete}
             />
             <Route exact path="/forgot/password" component={ForgotPassword} />
-
+            <Route exact path="/sub/:slug" component={SubHome} />
             <AdminRoute
               exact
               path="/admin/dashboard"
@@ -110,6 +114,8 @@ const App = () => {
               path="/admin/category/:slug"
               component={CategoryUpdate}
             />
+            <AdminRoute exact path="/admin/sub" component={SubCreate} />
+           <AdminRoute exact path="/admin/sub/:slug" component={SubUpdate} />
             <AdminRoute exact path="/admin/product" component={ProductCreate} />
             <AdminRoute exact path="/admin/adv" component={AdvCreate} />
             <AdminRoute exact path="/admin/req" component={Requirement} />

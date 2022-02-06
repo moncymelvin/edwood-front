@@ -1,64 +1,80 @@
-import React from "react";
-import Resizer from "react-image-file-resizer";
+import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Avatar from "@material-ui/core/Avatar";
-import Badge from "@material-ui/core/Badge";
+import { Avatar, Button, Badge } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 
-const FileUpload = ({ values, setValues, setLoading,checked }) => {
-  const { user } = useSelector((state) => ({ ...state }));
+const FileUpload = ({ values, setValues, setLoading, checked }) => {
+  const [srcImg, setSrcImg] = useState(null);
+  const [image, setImage] = useState(null);
+  const [crop, setCrop] = useState({ aspect: checked ? 16 / 8 : 3 / 2});
+  const [result, setResult] = useState(null);
 
-  const fileUploadAndResize = (e) => {
-    // console.log(e.target.files);
-    // resize
-    let files = e.target.files; // 3
-    let allUploadedFiles = values?.images;
-
-    if (files) {
-      setLoading(true);
-      for (let i = 0; i < files.length; i++) {
-        Resizer.imageFileResizer(
-          files[i],
-          checked?1080:720,
-          checked?1080:720,
-          "JPEG",
-          100,
-          0,
-          (uri) => {
-            // console.log(uri);
-            axios
-              .post(
-                `${process.env.REACT_APP_API}/uploadimages`,
-                { image: uri },
-                {
-                  headers: {
-                    authtoken: user ? user.token : "",
-                  },
-                }
-              )
-              .then((res) => {
-                console.log("IMAGE UPLOAD RES DATA", res);
-                setLoading(false);
-                allUploadedFiles?.push(res.data);
-                setValues({...values, images: allUploadedFiles });
-              })
-              .catch((err) => {
-                setLoading(false);
-                console.log("CLOUDINARY UPLOAD ERR", err);
-              });
-          },
-          "base64"
-        );
-      }
-    }
-    // send back to server to upload to cloudinary
-    // set url to images[] in the parent component state - ProductCreate
+  const handleImage = async (event) => {
+    setSrcImg(URL.createObjectURL(event.target.files[0]));
   };
+
+  const getCroppedImg = async () => {
+    try {
+      const canvas = document.createElement('canvas');
+  const scaleX = image.naturalWidth / image.width;
+  const scaleY = image.naturalHeight / image.height;
+  canvas.width = crop.width;
+  canvas.height = crop.height;
+  const ctx = canvas.getContext('2d');
+
+  ctx.drawImage(
+    image,
+    crop.x * scaleX,
+    crop.y * scaleY,
+    crop.width * scaleX,
+    crop.height * scaleY,
+    0,
+    0,
+    crop.width,
+    crop.height
+  );
+      const base64Image = canvas.toDataURL("image/jpeg");
+      if (base64Image !== "data:,") {
+        setResult(base64Image);
+      }
+    } catch (e) {
+//handle error
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    let allUploadedFiles = values?.images;
+    axios
+      .post(
+        `${process.env.REACT_APP_API}/uploadimages`,
+        { image: result },
+        {
+          headers: {
+            authtoken: user ? user.token : "",
+          },
+        }
+      )
+      .then((res) => {
+        setLoading(false);
+        allUploadedFiles?.push(res.data);
+        setValues({ ...values, images: allUploadedFiles });
+        setResult(null);
+        setImage(null);
+        setSrcImg(null);
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  };
+
+  const { user } = useSelector((state) => ({ ...state }));
 
   const handleImageRemove = (public_id) => {
     setLoading(true);
-    // console.log("remove image", public_id);
     axios
       .post(
         `${process.env.REACT_APP_API}/removeimage`,
@@ -78,7 +94,6 @@ const FileUpload = ({ values, setValues, setLoading,checked }) => {
         setValues({ ...values, images: filteredImages });
       })
       .catch((err) => {
-        console.log(err);
         setLoading(false);
       });
   };
@@ -91,42 +106,75 @@ const FileUpload = ({ values, setValues, setLoading,checked }) => {
   }));
 
   const classes = useStyles();
-console.log("values==",values?.images)
+
   return (
     <>
-      
-
+      <div className="container" fluid="md">
+        <div className="mb-3" controlId="formBasicEmail">
+          <div>
+            {srcImg ? (
+              <div>
+                <ReactCrop
+                  style={{ maxWidth: "80%" }}
+                  src={srcImg}
+                  onImageLoaded={setImage}
+                  crop={crop}
+                  onChange={setCrop}
+                />
+                <br />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ fontSize: "12px" }}
+                  onClick={getCroppedImg}
+                >
+                  crop
+                </Button>
+              </div>
+            ) : (
+              values?.images?.length ? null :  <input type="file" accept="image/*" onChange={handleImage} />
+            )}
+            {result && (
+              <div>
+                <img
+                  src={result}
+                  alt="cropped image"
+                  style={{ maxWidth: "80%" }}
+                />
+                <br />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ fontSize: "12px" }}
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      <br />
       <div className="row">
         {values?.images &&
           values?.images?.map((image) => (
             <Badge
-        badgeContent={"X"}
-        color="primary"
-        key={image.public_id}
-        onClick={() => handleImageRemove(image.public_id)}
-        style={{ cursor: "pointer" }}
-      >
-        <Avatar alt="Remy Sharp" src={image.url} className={classes.large} />
-      </Badge>
+              badgeContent={"X"}
+              color="primary"
+              key={image.public_id}
+              onClick={() => handleImageRemove(image.public_id)}
+              style={{ cursor: "pointer" }}
+            >
+              <Avatar
+                alt="Remy Sharp"
+                src={image.url}
+                className={classes.large}
+              />
+            </Badge>
           ))}
       </div>
-
-      {values?.images?.length ? null: <div className="row">
-        <label className="btn btn-primary btn-raised mt-3">
-         
-          <input
-            type="file"
-            hidden
-            accept="images/*"
-            onChange={fileUploadAndResize}
-          />
-        </label>
-       
-      </div>}
-     
-
-
-      <br/>
+      <br />
     </>
   );
 };

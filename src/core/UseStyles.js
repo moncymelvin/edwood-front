@@ -5,6 +5,7 @@ const UseStyles = makeStyles((theme) => ({
   wrap:{
 marginLeft: '150px',
 marginRight: '150px',
+backgroundColor: 'white',
 [theme.breakpoints.down("sm")]: {
   marginLeft: '0px',
 marginRight: '0px',
@@ -123,8 +124,13 @@ marginTop:"10px"
     [theme.breakpoints.down("md")]: {
       padding: "3px",
     },
+    [theme.breakpoints.down("sm")]: {
+      padding: "5px",
+      paddingBottom: "10px"
+    },
   },
   productwrapper:{
+    // backgroundColor:"white",
     [theme.breakpoints.down("sm")]: {
       margin:"0px 10px 0px 10px",
       
@@ -137,10 +143,10 @@ marginTop:"10px"
       
     },
   },
-  imageHeight:{
-    height:'250px',
+  fontSize:{
+    fontSize: 25,
     [theme.breakpoints.down("sm")]: {
-      height:"160px",
+      fontSize: 20,
       
     },
   }

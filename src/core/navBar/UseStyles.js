@@ -50,13 +50,13 @@ const UseStyles = makeStyles((theme) => ({
     opacity: 0.6,
   },
   backgroundcolor: {
-    backgroundColor: '#fff',
+    backgroundColor: '#232F3E',
   },
   shiftright: {
     paddingLeft:"30px",
     fontSize:"14px",
     fontWeight:'700',
-    color:'black'
+    color:'white'
      //color:theme.palette.textSecondary.main,
     },
   accountname: {

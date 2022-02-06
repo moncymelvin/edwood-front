@@ -6,7 +6,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Badge from "@material-ui/core/Badge";
 import { makeStyles } from "@material-ui/core/styles";
 
-const FileUpload = ({ values, setValues, setLoading,checked }) => {
+const CategoryFileUpload = ({ values, setValues, setLoading,checked }) => {
   const { user } = useSelector((state) => ({ ...state }));
 
   const fileUploadAndResize = (e) => {
@@ -131,4 +131,4 @@ console.log("values==",values?.images)
   );
 };
 
-export default FileUpload;
+export default CategoryFileUpload;

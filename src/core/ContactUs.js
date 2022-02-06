@@ -69,7 +69,7 @@ const ContactUs = () => {
         <div class="col-md-6">
           <h3>Contact Info</h3>
           <div class="contact-item">
-            <span>Address Line 1</span>
+            <span>Manufactured and packed by</span>
             <p>
               Edakkattu Furnitures,
               <br />
@@ -92,7 +92,7 @@ const ContactUs = () => {
           </div>
           <div class="contact-item">
             <span>Phone</span>
-            <p> +91 8590774213, +91 9947612356</p>
+            <p><b> +91 8590774213, +91 9947612356</b></p>
           </div>
         </div>
         <div class="col-md-6">
