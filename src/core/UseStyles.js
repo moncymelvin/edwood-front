@@ -123,6 +123,10 @@ marginTop:"10px"
     [theme.breakpoints.down("md")]: {
       padding: "3px",
     },
+    [theme.breakpoints.down("sm")]: {
+      padding: "5px",
+      paddingBottom: "10px"
+    },
   },
   productwrapper:{
     [theme.breakpoints.down("sm")]: {
@@ -137,10 +141,10 @@ marginTop:"10px"
       
     },
   },
-  imageHeight:{
-    height:'250px',
+  fontSize:{
+    fontSize: 25,
     [theme.breakpoints.down("sm")]: {
-      height:"160px",
+      fontSize: 20,
       
     },
   }

@@ -10,7 +10,6 @@ import {
   Avatar,
   CircularProgress,
 } from "@material-ui/core";
-import AutoFitImage from "react-image-autofit-frame";
 import Truncate from "react-truncate";
 import { useMediaQuery } from "react-responsive";
 import UseStyles from "./UseStyles";
@@ -58,23 +57,7 @@ const Cards = ({ product, handleRemove, admin }) => {
           <div className={classes.media} onClick={() =>handleOpen()
             // window.open(images && images.length && images[0].url, "_self")
           }>
-            {isTabletOrMobile ? (
-              <AutoFitImage
-                // positionY="top"
-                frameWidth="280px"
-                frameHeight="200px"
-                imgSrc={images && images.length && images[0].url}
-                imgSize="contain"
-              />
-            ) : (
-              <AutoFitImage
-                // positionY="top"
-                frameWidth="350px"
-                frameHeight="250px"
-                imgSrc={images && images.length && images[0].url}
-                imgSize="contain"
-              />
-            )}
+          <img src={images && images.length && images[0].url} style={{height:"100%", width:"100%",objectFit:"contain"}}/>
           </div>
           <Box className={classes.boxcontent} style={{backgroundColor:product?.category?.name==="adv"?'lime': 'white'}}>
             <div style={{ padding: "10px" }}>

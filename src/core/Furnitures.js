@@ -37,7 +37,7 @@ export default function Furnitures() {
     <div className={classes.productwrapper}>
       <Grid container alignItems="center">
         {products?.map((product) => {
-          return  <Grid item lg={3} md={3} xs={6} className={classes.products}>
+          return  <Grid item lg={4} md={4} xs={12} className={classes.products}>
               <Cards product={product} />
             </Grid>
         })}

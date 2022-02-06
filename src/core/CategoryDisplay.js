@@ -22,7 +22,6 @@ export default function CategoryDisplay() {
   const categoryCard = (categorie) => {
     return (
       <div
-        className={classes.imageHeight}
         style={{
           backgroundImage: `url(${categorie?.images[0]?.images[0]?.url})`,
           // width: "90%",
@@ -35,19 +34,20 @@ export default function CategoryDisplay() {
       >
         <div
           style={{
-            background: "rgba(0, 0, 0, 0.5)",
+            background: "rgba(0, 0, 0, 0.6)",
             height: "100%",
             width: "100%",
             borderRadius: "20px",
           }}
         >
           <h3
+          className={classes.fontSize}
             style={{
               textAlign: "center",
               paddingTop: "30%",
+              paddingBottom: "30%",
               color: "white",
               fontWeight: "500",
-              fontSize: "25px",
             }}
           >
             {categorie?.name}

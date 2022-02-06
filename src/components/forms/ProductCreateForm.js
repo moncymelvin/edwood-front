@@ -1,11 +1,17 @@
 import React from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 
 const ProductCreateForm = ({
   handleSubmit,
   handleChange,
+  setValues,
   values,
   handleCatagoryChange,
+  handleDescriptionChange,
+  subOptions,
+  showSub,
 }) => {
   // destructure
   const {
@@ -24,6 +30,15 @@ const ProductCreateForm = ({
     brand,
   } = values;
 
+  const handleEnter = (event) => {
+    if (event.key.toLowerCase() === "enter") {
+      const form = event.target.form;
+      const index = [...form].indexOf(event.target);
+      form.elements[index + 1].focus();
+      event.preventDefault();
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
@@ -34,19 +49,11 @@ const ProductCreateForm = ({
           className="form-control"
           value={title}
           onChange={handleChange}
+          onKeyDown={handleEnter}
         />
       </div>
 
-      <div className="form-group">
-        <label>Description</label>
-        <input
-          type="text"
-          name="description"
-          className="form-control"
-          value={description}
-          onChange={handleChange}
-        />
-      </div>
+      
 
       <div className="form-group">
         <label>Price</label>
@@ -56,6 +63,7 @@ const ProductCreateForm = ({
           className="form-control"
           value={price}
           onChange={handleChange}
+          onKeyDown={handleEnter}
         />
       </div>
 
@@ -124,10 +132,39 @@ const ProductCreateForm = ({
         </select>
       </div>
 
-      {/* {showSub && (
+      <div className="form-group">
+        <label>Description</label><br/>
+        <ReactQuill theme="snow" name="description" value={description} onChange={handleDescriptionChange} onKeyDown={handleEnter}/>
+        {/* <input
+          type="text"
+          name="description"
+          className="form-control"
+          value={description}
+          onChange={handleChange}
+        /> */}
+      </div>
+{console.log("subOptions=====",subOptions)}
+
+      {showSub && (
         <div>
           <label>Sub Categories</label>
-          <Select
+
+          <select
+          name="category"
+          className="form-control"
+          onChange={(e) => setValues({ ...values, subs: e.target.value })}
+        >
+          <option>Please select</option>
+          {subOptions?.length > 0 &&
+            subOptions?.map((c) => (
+              <option key={c._id} value={c._id}>
+                {c.name}
+              </option>
+            ))}
+        </select>
+
+
+          {/* <Select
             mode="multiple"
             style={{ width: "100%" }}
             placeholder="Please select"
@@ -140,9 +177,9 @@ const ProductCreateForm = ({
                   {s.name}
                 </Option>
               ))}
-          </Select>
+          </Select> */}
         </div>
-      )} */}
+      )}
 
       <br />
       <button className="btn btn-outline-info bg-primary">Save</button>

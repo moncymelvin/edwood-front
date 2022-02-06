@@ -4,7 +4,6 @@ import { getCategory } from "../functions/category";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
-import AutoFitImage from "react-image-autofit-frame";
 import { useMediaQuery } from "react-responsive";
 import "../slick-theme.css";
 import { getAdvs } from "../functions/adv"
@@ -22,6 +21,7 @@ const Banner = () => {
   getAdvs().then((c) => setAdvs(c.data));
 
 const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+const isIpad = useMediaQuery({ query: "(max-width: 850px)" });
   const classes = UseStyles();
   const settings = {
     dots: true,
@@ -36,23 +36,7 @@ const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
     <div>
     <Slider {...settings} autoplaySpeed={3000}>
      {advs?.map((item)=>{
-       return  isTabletOrMobile ? (
-              <AutoFitImage
-                // positionY="top"
-                frameWidth="100%"
-                frameHeight="200px"
-                imgSrc={item?.images[0]?.url}
-                imgSize="cover"
-              />
-            ) : (
-              <AutoFitImage
-                // positionY="top"
-                frameWidth="100%"
-                frameHeight="600px"
-                imgSrc={item?.images[0]?.url}
-                imgSize="cover"
-              /> 
-            )
+       return  <img src={item?.images[0]?.url} style={{width:'100%',height:'100%'}}/>
      })}
     </Slider>
   </div>

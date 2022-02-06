@@ -2,44 +2,44 @@ import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import {
-  createCategory,
-  getCategories,
-  removeCategory,
-} from "../../../functions/category";
+import { getCategories } from "../../../functions/category";
+import { createSub, getSub, removeSub, getSubs } from "../../../functions/sub";
 import { Link } from "react-router-dom";
 import CategoryForm from "../../../components/forms/CategoryForm";
-import CategoryFileUpload from "../../../components/forms/CategoryFileUpload";
+import LocalSearch from "../../../components/forms/LocalSearch";
 
-const CategoryCreate = () => {
+const SubCreate = () => {
   const { user } = useSelector((state) => ({ ...state }));
-
-  const [images, setImages] = useState([]);
 
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState("");
+  const [subs, setSubs] = useState([]);
   // step 1
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     loadCategories();
+    loadSubs();
   }, []);
 
   const loadCategories = () =>
     getCategories().then((c) => setCategories(c.data));
 
+  const loadSubs = () => getSubs().then((s) => setSubs(s.data));
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(name);
     setLoading(true);
-    createCategory({ name,images: images }, user.token)
+    createSub({ name, parent: category }, user.token)
       .then((res) => {
         // console.log(res)
         setLoading(false);
         setName("");
-        toast.success(`"Category" is created`);
-        loadCategories();
+        toast.success(`"${res.data.name}" is created`);
+        loadSubs();
       })
       .catch((err) => {
         console.log(err);
@@ -53,11 +53,11 @@ const CategoryCreate = () => {
     // console.log(answer, slug);
     if (window.confirm("Delete?")) {
       setLoading(true);
-      removeCategory(slug, user.token)
+      removeSub(slug, user.token)
         .then((res) => {
           setLoading(false);
           toast.error(`${res.data.name} deleted`);
-          loadCategories();
+          loadSubs();
         })
         .catch((err) => {
           if (err.response.status === 400) {
@@ -81,16 +81,24 @@ const CategoryCreate = () => {
           {loading ? (
             <h4 className="text-danger">Loading..</h4>
           ) : (
-            <h4>Create category</h4>
+            <h4>Create sub category</h4>
           )}
 
-          <div className="p-3">
-            <CategoryFileUpload
-              values={images}
-              setValues={setImages}
-              setLoading={setLoading}
-              checked={false}
-            />
+          <div className="form-group">
+            <label>Parent category</label>
+            <select
+              name="category"
+              className="form-control"
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option>Please select</option>
+              {categories.length > 0 &&
+                categories.map((c) => (
+                  <option key={c._id} value={c._id}>
+                    {c.name}
+                  </option>
+                ))}
+            </select>
           </div>
 
           <CategoryForm
@@ -100,21 +108,21 @@ const CategoryCreate = () => {
           />
 
           {/* step 2 and step 3 */}
-          {/* <LocalSearch keyword={keyword} setKeyword={setKeyword} /> */}
+          <LocalSearch keyword={keyword} setKeyword={setKeyword} />
 
           {/* step 5 */}
-          {categories.filter(searched(keyword)).map((c) => (
-            <div className="bg-info" key={c._id}>
-              {c.name}
+          {subs.filter(searched(keyword)).map((s) => (
+            <div key={s._id}>
+              {s.name}
               <span
-                onClick={() => handleRemove(c.slug)}
+                onClick={() => handleRemove(s.slug)}
                 className="btn btn-sm float-right"
               >
                  <h5 className="text-danger">Delete</h5>
               </span>
-              <Link to={`/admin/category/${c.slug}`}>
+              <Link to={`/admin/sub/${s.slug}`}>
                 <span className="btn btn-sm float-right">
-                 <h5 className="text-info">Edit</h5>
+                <h5 className="text-info">Edit</h5>
                 </span>
               </Link>
             </div>
@@ -125,4 +133,4 @@ const CategoryCreate = () => {
   );
 };
 
-export default CategoryCreate;
+export default SubCreate;

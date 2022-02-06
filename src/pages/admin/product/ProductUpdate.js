@@ -104,6 +104,13 @@ const ProductUpdate = ({ match, history }) => {
     setArrayOfSubs([]);
   };
 
+  const handleDescriptionChange = (e) => {
+    // console.log("e====",e,"values?.description===",values?.description)
+    if(values?.description!==""){
+      setValues({ ...values, "description": e });
+    }
+   
+  };
   return (
     <div className="container-fluid">
       <div className="row">
@@ -140,6 +147,7 @@ const ProductUpdate = ({ match, history }) => {
             arrayOfSubs={arrayOfSubs}
             setArrayOfSubs={setArrayOfSubs}
             selectedCategory={selectedCategory}
+            handleDescriptionChange={handleDescriptionChange}
           />
          
         </div>

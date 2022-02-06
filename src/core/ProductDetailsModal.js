@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: "70%",
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
+    // border: "2px solid #000",
+    // boxShadow: theme.shadows[5],
     // padding: theme.spacing(2, 4, 3),
   },
 }));
@@ -56,11 +56,11 @@ const ProductDetailsModal = ({ open, product, handleClose }) => {
         <AutoFitImage
           // positionY="top"
           frameWidth="350px"
-          frameHeight="250px"
+          frameHeight="230px"
           imgSrc={
             product?.images && product?.images.length && product?.images[0].url
           }
-          imgSize="cover"
+          imgSize="contain"
         />
       </div>
       <br />
@@ -72,12 +72,12 @@ const ProductDetailsModal = ({ open, product, handleClose }) => {
           padding: "10px",
         }}
       >
-        <b>{product?.title}</b>
+        {/* <b>{product?.title}</b>
         <br />
         Rs. {product?.price}
-        <br /> <br />
-      <b> Description :</b>  <br />
-        {product?.description} <br />
+        <br /> <br /> */}
+      <div dangerouslySetInnerHTML={{__html: product?.description}}></div><br />
+        {/* {product?.description} <br /> */}
       </div>
     </div>
   );
@@ -92,6 +92,7 @@ const ProductDetailsModal = ({ open, product, handleClose }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        marginRight:'14px'
       }}
     >
       {body}

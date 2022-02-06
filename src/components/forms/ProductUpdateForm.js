@@ -1,4 +1,6 @@
 import React from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const ProductUpdateForm = ({
   handleSubmit,
@@ -11,6 +13,7 @@ const ProductUpdateForm = ({
   arrayOfSubs,
   setArrayOfSubs,
   selectedCategory,
+  handleDescriptionChange
 }) => {
   // destructure
   const {
@@ -28,6 +31,15 @@ const ProductUpdateForm = ({
     brand,
   } = values;
 
+  const handleEnter = (event) => {
+    if (event.key.toLowerCase() === "enter") {
+      const form = event.target.form;
+      const index = [...form].indexOf(event.target);
+      form.elements[index + 1].focus();
+      event.preventDefault();
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
@@ -38,19 +50,11 @@ const ProductUpdateForm = ({
           className="form-control"
           value={title}
           onChange={handleChange}
+          onKeyDown={handleEnter}
         />
       </div>
 
-      <div className="form-group">
-        <label>Description</label>
-        <input
-          type="text"
-          name="description"
-          className="form-control"
-          value={description}
-          onChange={handleChange}
-        />
-      </div>
+     
 
       <div className="form-group">
         <label>Price</label>
@@ -60,6 +64,7 @@ const ProductUpdateForm = ({
           className="form-control"
           value={price}
           onChange={handleChange}
+          onKeyDown={handleEnter}
         />
       </div>
 
@@ -79,6 +84,18 @@ const ProductUpdateForm = ({
               </option>
             ))}
         </select>
+      </div>
+
+      <div className="form-group">
+        <label>Description</label><br/>
+        <ReactQuill theme="snow" name="description" value={description} onChange={handleDescriptionChange}/>
+        {/* <input
+          type="text"
+          name="description"
+          className="form-control"
+          value={description}
+          onChange={handleChange}
+        /> */}
       </div>
 
       {/* <div>
