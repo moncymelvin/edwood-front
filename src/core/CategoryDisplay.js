@@ -40,18 +40,30 @@ export default function CategoryDisplay() {
             borderRadius: "20px",
           }}
         >
-          <h3
-          className={classes.fontSize}
+          <div
+            className={classes.fontSize}
             style={{
               textAlign: "center",
-              paddingTop: "30%",
-              paddingBottom: "30%",
+              paddingTop: "15%",
+              paddingBottom: "20%",
               color: "white",
               fontWeight: "500",
             }}
           >
-            {categorie?.name}
-          </h3>
+            <h3
+              style={{
+                color: "white",
+                height: "60px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "0px 5px 0px 5px",
+                fontWeight: "600",
+              }}
+            >
+              {categorie?.name}
+            </h3>
+          </div>
         </div>
       </div>
     );

@@ -34,6 +34,7 @@ const AllFurnitures = lazy(() => import("./core/AllFurnitures"));
 const NavBar = lazy(() => import("./core/navBar/NavBar"));
 const ContactUs = lazy(() => import("./core/ContactUs"));
 const Footer = lazy(() => import("./core/Footer"));
+const Product = lazy(()=> import( "./pages/Product"))
 
 const SubCreate = lazy(() => import("./pages/admin/sub/SubCreate"));
 const SubUpdate = lazy(() => import("./pages/admin/sub/SubUpdate"));
@@ -99,6 +100,7 @@ const App = () => {
             />
             <Route exact path="/forgot/password" component={ForgotPassword} />
             <Route exact path="/sub/:slug" component={SubHome} />
+            <Route exact path="/product/:slug" component={Product} />
             <AdminRoute
               exact
               path="/admin/dashboard"

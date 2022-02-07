@@ -7,3 +7,9 @@
 .pointer {
   cursor: pointer;
 }
+
+* {
+  font-family: "poppins";
+  font-style: normal;
+  box-sizing: border-box;
+}
