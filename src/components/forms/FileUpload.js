@@ -17,26 +17,29 @@ const FileUpload = ({ values, setValues, setLoading, checked }) => {
   };
 
   const getCroppedImg = async () => {
-    try {
-      const canvas = document.createElement('canvas');
-  const scaleX = image.naturalWidth / image.width;
-  const scaleY = image.naturalHeight / image.height;
-  canvas.width = crop.width;
-  canvas.height = crop.height;
-  const ctx = canvas.getContext('2d');
+    try {    
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    const tmpCanvas = document.createElement("canvas");
+    tmpCanvas.width = Math.ceil(crop.width*scaleX);
+    tmpCanvas.height = Math.ceil(crop.height*scaleY);
 
-  ctx.drawImage(
-    image,
-    crop.x * scaleX,
-    crop.y * scaleY,
-    crop.width * scaleX,
-    crop.height * scaleY,
-    0,
-    0,
-    crop.width,
-    crop.height
-  );
-      const base64Image = canvas.toDataURL("image/jpeg");
+    const ctx = tmpCanvas.getContext("2d");
+    ctx.fillStyle = 'white'
+    ctx.fillRect(0, 0, tmpCanvas.width, tmpCanvas.height)
+    ctx.drawImage(
+        image,
+        crop.x * scaleX,
+        crop.y * scaleY,
+        crop.width * scaleX,
+        crop.height * scaleY,
+        0,
+        0,
+        crop.width*scaleX,
+        crop.height*scaleY,
+    );
+  
+      const base64Image = tmpCanvas.toDataURL("image/jpeg");
       if (base64Image !== "data:,") {
         setResult(base64Image);
       }
@@ -132,7 +135,7 @@ const FileUpload = ({ values, setValues, setLoading, checked }) => {
                 </Button>
               </div>
             ) : (
-              values?.images?.length ? null :  <input type="file" accept="image/*" onChange={handleImage} />
+               <input type="file" accept="image/*" onChange={handleImage} />
             )}
             {result && (
               <div>
@@ -164,7 +167,7 @@ const FileUpload = ({ values, setValues, setLoading, checked }) => {
               color="primary"
               key={image.public_id}
               onClick={() => handleImageRemove(image.public_id)}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer",marginRight:'10px' }}
             >
               <Avatar
                 alt="Remy Sharp"

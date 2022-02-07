@@ -19,7 +19,7 @@ const Base = () => {
 
       <div style={{ marginTop: "10%" }}>
         <div class="text-center center">
-          <h2>Our Furnitures</h2>
+          <h2>New arrivals</h2>
           <hr />
         </div>
 

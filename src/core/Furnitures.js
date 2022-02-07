@@ -50,8 +50,7 @@ export default function Furnitures() {
           <Button
             variant="contained"
             color="secondary"
-            size="large"
-            style={{ fontSize: "12px" }}
+            style={{ fontSize: "14px",fontWeight:'600' }}
           >
             View All Furnitures
           </Button>

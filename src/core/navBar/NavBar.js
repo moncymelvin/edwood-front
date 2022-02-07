@@ -139,6 +139,14 @@ const NavBar = () => {
               marginRight: "30px",
             }}
           >
+          <Link to="/">
+                      <div
+                        className={classes.shiftright}
+                        onClick={() => window.scrollTo(0, 0)}
+                      >
+                        Home
+                      </div>
+                    </Link>
             <div onClick={logout} className={classes.shiftright}>
               Logout
             </div>
@@ -316,6 +324,15 @@ const NavBar = () => {
               >
                 {user ? (
                   <div>
+                  <Link to="/">
+                      <div
+                        className={classes.shiftright}
+                        onClick={() => window.scrollTo(0, 0)}
+                      >
+                        Home
+                      </div>
+                    </Link>
+                    <br />
                     <div onClick={logout} className={classes.shiftright}>
                       Logout
                     </div>

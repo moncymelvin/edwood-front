@@ -41,11 +41,8 @@ const Cards = ({ product, handleRemove, admin }) => {
  
   return (
     <Box className={classes.head}>
-      <a
-      // target="_blank"
-      // href={uri}
-      >
-         <ProductDetailsModal open={open} product={product} handleClose={handleClose}/>
+      <Link to={`/product/${slug}`}>
+ {/* <ProductDetailsModal open={open} product={product} handleClose={handleClose}/> */}
         <Card
           className={classes.root}
           onMouseOver={toggleRaised}
@@ -76,7 +73,7 @@ const Cards = ({ product, handleRemove, admin }) => {
             </div>
           </Box>
         </Card>
-      </a>
+        </Link>
     </Box>
   );
 };

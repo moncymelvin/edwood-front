@@ -44,7 +44,7 @@ const CategoryHome = ({ match }) => {
           <hr />
         </div>
         <Grid container alignItems="center">
-          {subCategory?.length &&
+          {subCategory?.length ?
             subCategory?.map((item, index) => {
               return (
                 <Grid item lg={3} md={3} xs={6} key={index}>
@@ -84,7 +84,7 @@ const CategoryHome = ({ match }) => {
                   </div>
                 </Grid>
               );
-            })}
+            }):null}
         </Grid>
         <Grid container alignItems="center">
           {products?.map((product, index) => (

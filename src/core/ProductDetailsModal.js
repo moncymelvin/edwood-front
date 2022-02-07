@@ -72,12 +72,11 @@ const ProductDetailsModal = ({ open, product, handleClose }) => {
           padding: "10px",
         }}
       >
-        {/* <b>{product?.title}</b>
+        <b>{product?.title}</b>
         <br />
         Rs. {product?.price}
-        <br /> <br /> */}
+        <br /> <br />
       <div dangerouslySetInnerHTML={{__html: product?.description}}></div><br />
-        {/* {product?.description} <br /> */}
       </div>
     </div>
   );
