@@ -114,6 +114,7 @@ const ProductCreate = () => {
               setValues={setValues}
               setLoading={setLoading}
               checked={false}
+              loading={loading}
             />
           </div>
          

@@ -88,6 +88,7 @@ const AdvCreate = () => {
               setValues={setValues}
               setLoading={setLoading}
               checked={true}
+              loading={loading}
             />
           </div>
           <AdvCreateForm
