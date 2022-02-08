@@ -139,6 +139,7 @@ const ProductUpdate = ({ match, history }) => {
               setValues={setValues}
               setLoading={setLoading}
               checked={false}
+              loading={loading}
             />
           </div>
          

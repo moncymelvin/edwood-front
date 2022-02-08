@@ -5,8 +5,9 @@ import { Avatar, Button, Badge } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import { toast } from "react-toastify";
 
-const FileUpload = ({ values, setValues, setLoading, checked }) => {
+const FileUpload = ({ values, setValues, setLoading, checked, loading }) => {
   const [srcImg, setSrcImg] = useState(null);
   const [image, setImage] = useState(null);
   const [crop, setCrop] = useState({ aspect: checked ? 16 / 8 : 3 / 2});
@@ -44,12 +45,13 @@ const FileUpload = ({ values, setValues, setLoading, checked }) => {
         setResult(base64Image);
       }
     } catch (e) {
-//handle error
+      toast.error("Incorrect image format, ",e);
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     let allUploadedFiles = values?.images;
     axios
       .post(
@@ -71,6 +73,7 @@ const FileUpload = ({ values, setValues, setLoading, checked }) => {
       })
       .catch((err) => {
         setLoading(false);
+        toast.error("Incorrect image format, ",err);
       });
   };
 
@@ -151,7 +154,7 @@ const FileUpload = ({ values, setValues, setLoading, checked }) => {
                   style={{ fontSize: "12px" }}
                   onClick={handleSubmit}
                 >
-                  Submit
+                {loading ? "loading":"Submit"}  
                 </Button>
               </div>
             )}
